@@ -10,9 +10,9 @@
     <link href="~<%= htmlWebpackPlugin.files.css[filename] %>" rel="stylesheet" />
     <% } %>
     <!-- End Stylesheets -->
-</head>
+</head> 
 <body>
-    <header class="bg-gradient-to-tr from-green-500 to-red-500 text-white flex flex-col sm:flex-row justify-between p-6" x-data="SecretSanta.setupNav()">
+    <header class="bg-gradient-to-tr from-green-500 to-yellow-600 text-white flex flex-col sm:flex-row justify-between p-6" x-data="SecretSanta.setupNav()">
         <div class="flex flex-row justify-between">
             <a class="text-2xl leading-10" asp-controller="Home" asp-action="Index">Secret Santa</a>
             <button class="sm:hidden" @@click="toggleMenu()"><i class="fas fa-bars text-2xl align-middle h-full"></i></button>

@@ -2,7 +2,6 @@
 using System.Linq;
 using System.Net;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.VisualBasic;
 using SecretSanta.Business;
 
 namespace SecretSanta.Api.Controllers
