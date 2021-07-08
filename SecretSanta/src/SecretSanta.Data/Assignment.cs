@@ -24,5 +24,7 @@ namespace SecretSanta.Data
             Giver = new User();
             Receiver = new User();
         }
+        
+        
     }
 }

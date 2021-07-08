@@ -20,6 +20,9 @@ namespace SecretSanta.Data
                 modelBuilder.Entity<Assignment>()
                     .HasAlternateKey(a => new {a.Giver_Receiver});
             }
+
+            modelBuilder.Entity<User>().HasData((DbInitializer.Users()));
+            modelBuilder.Entity<Group>().HasData(DbInitializer.Groups());
         }
     }
 }
