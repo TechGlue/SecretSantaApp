@@ -11,3 +11,12 @@
         @apply text-red-300 text-base;
     }
 }
+
+#title
+{
+    font-family: 'Mountains of Christmas', cursive;
+}
+#navBar
+{
+    font-family: 'Open Sans', sans-serif;
+}

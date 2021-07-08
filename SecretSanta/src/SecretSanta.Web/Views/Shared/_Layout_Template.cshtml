@@ -9,31 +9,39 @@
     <% for (var filename in htmlWebpackPlugin.files.css) { %>
     <link href="~<%= htmlWebpackPlugin.files.css[filename] %>" rel="stylesheet" />
     <% } %>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Mountains+of+Christmas&family=Open+Sans&display=swap" rel="stylesheet">
     <!-- End Stylesheets -->
 </head> 
 <body>
-    <header class="bg-gradient-to-tr from-green-500 to-yellow-600 text-white flex flex-col sm:flex-row justify-between p-6" x-data="SecretSanta.setupNav()">
-        <div class="flex flex-row justify-between">
-            <a class="text-2xl leading-10" asp-controller="Home" asp-action="Index">Secret Santa</a>
-            <button class="sm:hidden" @@click="toggleMenu()"><i class="fas fa-bars text-2xl align-middle h-full"></i></button>
-        </div>
-        <nav id="headerNav" class="hidden sm:inline-block">
-            <ul class="flex flex-col sm:flex-row">
+<header class="bg-gradient-to-r from-red-500 via-current to-green-500 text-white flex-col sm:flex-row justify-between p-6" x-data="SecretSanta.setupNav()">
+    <div id="title" class="text-blue-500 text-bold text-center text-5xl flex-row justify-between">
+        <a class="leading-10 " asp-controller="Home" asp-action="Index">Secret Santa</a>
+        <button class="sm:hidden" @@click="toggleMenu()"><i class="fas fa-bars text-2xl align-middle h-full"></i></button>
+    </div>
+    
+    <div class = "text-blue-500 text-center flex-row justify-between">
+        <nav id="headerNav" class="font-bold items-center text-center flex-row hidden sm:inline-block">
+            <ul id="navBar" class="flex sm:flex-row">
                 <li class="sm:px-6 leading-10"><a asp-controller="Users" asp-action="Index">Users</a></li>
                 <li class="sm:px-6 leading-10"><a asp-controller="Groups" asp-action="Index">Groups</a></li>
+                <li class="sm:px-6 leading-10"><a asp-controller="Gifts" asp-action="Index">Gifts</a></li>
             </ul>
         </nav>
-    </header>
-    <section class="m-10">
-        @RenderBody()
-    </section>
-    <script>
+    </div>
+
+</header>
+<section class="m-10">
+    @RenderBody()
+</section>
+<script>
         var apiHost = "@Configuration["ApiHost"].TrimEnd('/')";
     </script>
-    <!-- Scripts -->
-    <% for (var index in htmlWebpackPlugin.files.js) { %>
-    <script src="~<%= htmlWebpackPlugin.files.js[index] %>"></script>
-    <% } %>
-    <!-- End Scripts -->
+<!-- Scripts -->
+<% for (var index in htmlWebpackPlugin.files.js) { %>
+<script src="~<%= htmlWebpackPlugin.files.js[index] %>"></script>
+<% } %>
+<!-- End Scripts -->
 </body>
 </html>

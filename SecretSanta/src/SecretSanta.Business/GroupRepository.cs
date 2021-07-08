@@ -86,11 +86,11 @@ namespace SecretSanta.Business
             for (int i = 0; i < users.Count; i++)
             {
                 int endIndex = (i + 1) % users.Count;
-                group.Assignments.Add(new Assignment()
-                {
-                    Giver = Context.Users.Find(users[i].Id),
-                    Receiver = Context.Users.Find(users[endIndex].Id)
-                });
+                User Giver = Context.Users.Find(users[i].Id);
+                User Receiver = Context.Users.Find(users[endIndex].Id);
+
+                Assignment newAssignment = new Assignment(Giver, Receiver);
+                group.Assignments.Add(newAssignment); 
             }
 
             Save(@group);
