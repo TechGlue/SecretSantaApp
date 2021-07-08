@@ -7,8 +7,8 @@ namespace SecretSanta.Data
     {
         [Key]
         public int id { get; set; }
-        public User Giver { get; }
-        public User Receiver { get; }
+        public User Giver { get; set; }
+        public User Receiver { get; set; }
         public String Giver_Receiver { get; set; }
 
         public Assignment(User giver, User recipient)
