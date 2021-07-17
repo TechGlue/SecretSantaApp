@@ -8,9 +8,8 @@ namespace SecretSanta.Business
     public class UserRepository : IUserRepository
     {
         private SecretSantaContext Context { get; }
-
-        public UserRepository (SecretSantaContext dbContext)
-            => Context = dbContext ?? throw new ArgumentException((nameof(dbContext)));
+        public UserRepository(SecretSantaContext dbContext)
+            => Context = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
         
         public User Create(User item)
         {
@@ -52,7 +51,6 @@ namespace SecretSanta.Business
             {
                 throw new System.ArgumentNullException(nameof(item));
             }
-
             Context.Users.Update(item);
             Context.SaveChanges();
         }
