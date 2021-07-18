@@ -112,11 +112,9 @@ module.exports = (env, argv) => {
                     }
                 },
                 {
-                    test: /\.(png|jpg|gif|svg)$/,
-                    loader: 'file-loader',
-                    options: {
-                        name: '[name].[ext]?[hash]'
-                    }
+                    //IMAGE LOADER
+                    test: /\.(jpe?g|png|gif|svg)$/i,
+                    loader:'file-loader'
                 }
             ]
         },

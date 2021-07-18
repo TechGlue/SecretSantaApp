@@ -2,6 +2,9 @@ module.exports = {
     purge: ['./**/*.html', './**/*.cshtml'],
     theme: {
         extend: {
+            backgroundImage: them => ({
+                'shook-girl': "url('DesignAssets/HomePageAssests/circle-surprised-woman.png')",
+            }),
             colors:
             {
                 'baby-blue-lighter': '#DEECFC',

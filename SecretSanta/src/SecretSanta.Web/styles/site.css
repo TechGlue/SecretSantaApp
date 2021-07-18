@@ -20,6 +20,12 @@
         animation-delay: 4s;
     }
 }
+hr{
+    color: 	#000000;
+}
+html, body{
+    background: url('DesignAssets/HomePageAssests/HomeBackground.jpg') center center;
+}
 
 #title
 {
