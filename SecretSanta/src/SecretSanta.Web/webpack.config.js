@@ -4,7 +4,9 @@ const path = require('path');
 const webpack = require('webpack');
 
 // plugins
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const {
+    CleanWebpackPlugin
+} = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -32,23 +34,61 @@ module.exports = (env, argv) => {
         },
 
         module: {
-            rules: [
-                {
+            rules: [{
                     test: /\.scss$/,
-                    use: [
-                        { loader: MiniCssExtractPlugin.loader },
-                        { loader: 'css-loader' },
-                        { loader: 'postcss-loader', options: { postcssOptions: { ident: 'postcss', plugins: () => {autoprefixer()} } } },
-                        { loader: 'sass-loader', options: { implementation: require('sass'), sassOptions: { fiber: require('fibers') } } }
+                    use: [{
+                            loader: MiniCssExtractPlugin.loader
+                        },
+                        {
+                            loader: 'css-loader'
+                        },
+                        {
+                            loader: 'postcss-loader',
+                            options: {
+                                postcssOptions: {
+                                    ident: 'postcss',
+                                    plugins: () => {
+                                        autoprefixer()
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            loader: 'sass-loader',
+                            options: {
+                                implementation: require('sass'),
+                                sassOptions: {
+                                    fiber: require('fibers')
+                                }
+                            }
+                        }
                     ]
                 },
                 {
                     test: /\.css$/,
-                    use: [
-                        { loader: MiniCssExtractPlugin.loader },
-                        { loader: 'css-loader' },
-                        { loader: 'postcss-loader', options: { postcssOptions: { ident: 'postcss', plugins: () => {autoprefixer()} } } }
+                    use: [{
+                            loader: MiniCssExtractPlugin.loader
+                        },
+                        {
+                            loader: 'css-loader'
+                        },
+                        {
+                            loader: 'postcss-loader',
+                            options: {
+                                postcssOptions: {
+                                    ident: 'postcss',
+                                    plugins: () => {
+                                        autoprefixer()
+                                    }
+                                }
+                            }
+                        }
                     ]
+                },
+                {
+                    test: /\.html$/,
+                    exclude: /node_modules/,
+                    loader: 'html-loader'
                 },
                 {
                     test: /\.vue$/,
