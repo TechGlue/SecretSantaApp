@@ -11,6 +11,9 @@ namespace SecretSanta.Data
         public string FirstName { get; set; } = "";
         [Required]
         public string LastName { get; set; } = "";
+
+        [Required]
+        public string Email { get; set; } = "";
         public List<Group>? Groups { get; } = new();
     }
 }
