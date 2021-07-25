@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using SecretSanta.Business;
+using SecretSanta.Data;
 
 namespace SecretSanta.Api
 {
@@ -12,6 +13,7 @@ namespace SecretSanta.Api
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<SecretSantaContext>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IGroupRepository, GroupRepository>();
             services.AddControllers();
@@ -35,14 +37,18 @@ namespace SecretSanta.Api
             {
                 app.UseDeveloperExceptionPage();
             }
+            
+            using (IServiceScope? serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>()?.CreateScope())
+            {
+                SecretSantaContext? context = serviceScope?.ServiceProvider.GetRequiredService<SecretSantaContext>();
+                context.Database.EnsureDeleted();
+                context.Database.EnsureCreated();
+            }
 
             app.UseOpenApi();
             app.UseSwaggerUi3();
-
             app.UseRouting();
-
             app.UseCors();
-
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

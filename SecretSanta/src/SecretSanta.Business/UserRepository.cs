@@ -1,10 +1,16 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using SecretSanta.Data;
 
 namespace SecretSanta.Business
 {
     public class UserRepository : IUserRepository
     {
+        private SecretSantaContext Context { get; }
+        public UserRepository(SecretSantaContext dbContext)
+            => Context = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
+        
         public User Create(User item)
         {
             if (item is null)
@@ -12,27 +18,31 @@ namespace SecretSanta.Business
                 throw new System.ArgumentNullException(nameof(item));
             }
 
-            MockData.Users[item.Id] = item;
+            Context.Users.Add(item);
+            Context.SaveChanges();
             return item;
         }
 
         public User? GetItem(int id)
-        {
-            if (MockData.Users.TryGetValue(id, out User? user))
-            {
-                return user;
-            }
-            return null;
-        }
+            => List().FirstOrDefault<User>(i => i.Id == id);
 
         public ICollection<User> List()
-        {
-            return MockData.Users.Values;
-        }
-
+            => Context.Users
+                .ToList();
+        
+        
         public bool Remove(int id)
         {
-            return MockData.Users.Remove(id);
+            User item = Context.Users.Find(id);
+            
+            if (item is null)
+            {
+                return false;
+            }
+
+            Context.Users.Remove(item);
+            Context.SaveChanges();
+            return true;
         }
 
         public void Save(User item)
@@ -41,8 +51,8 @@ namespace SecretSanta.Business
             {
                 throw new System.ArgumentNullException(nameof(item));
             }
-
-            MockData.Users[item.Id] = item;
+            Context.Users.Update(item);
+            Context.SaveChanges();
         }
     }
 }

@@ -54,33 +54,43 @@ export function setupUsers() {
     }
 }
 
-export function createOrUpdateUser() {
-    return {
+export function createOrUpdateUser(){
+    return{
         user: {} as User,
-        async create() {
+        async create(){
             try {
-                const client = new UsersClient(apiHost);
-                await client.post(this.user);
-                window.location.href='/users';
-            } catch (error) {
+                const response = await axios.get(`${apiHost}/api/users`)
+                //grabbing the max id if we don't do this we will always be replacing user 0
+                let maxId:number = 0;
+
+                for(let k = 1; k < response.data.length; k++)
+                {
+                    if(response.data[k].id > maxId){
+                        maxId = response.data[k].id;
+                    }
+                }
+                this.user.id = maxId +1;
+                await axios.post(`${apiHost}/api/users`, this.user);
+                window.location.href = "/Users";
+            }catch (error){
                 console.log(error);
             }
         },
-        async update() {
-            try {
-                const client = new UsersClient(apiHost);
-                await client.put(this.user.id, this.user);
-                window.location.href='/users';
-            } catch (error) {
+        async update(){
+            try{
+                await axios.put(`${apiHost}/api/users/${this.user.id}`, this.user);
+                window.location.href = "/users";
+            }catch(error){
                 console.log(error);
             }
         },
-        async loadData() {
+
+        async loadData(){
             const pathnameSplit = window.location.pathname.split('/');
-            const id = pathnameSplit[pathnameSplit.length - 1];
-            try {
-                const client = new UsersClient(apiHost);
-                this.user = await client.get(+id);
+            const id = pathnameSplit[pathnameSplit.length-1];
+            try{
+                const response = await axios.get(`${apiHost}/api/users/${id}`)
+                this.user = response.data;
             } catch (error) {
                 console.log(error);
             }

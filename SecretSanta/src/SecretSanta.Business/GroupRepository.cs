@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Reflection.Metadata;
+using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using SecretSanta.Data;
 
 namespace SecretSanta.Business
@@ -8,6 +9,12 @@ namespace SecretSanta.Business
     public class GroupRepository : IGroupRepository
     {
         private Random rng = new Random();
+
+        private SecretSantaContext Context { get; }
+
+        public GroupRepository(SecretSantaContext dbContext)
+            => Context = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
+
         public Group Create(Group item)
         {
             if (item is null)
@@ -15,85 +22,80 @@ namespace SecretSanta.Business
                 throw new ArgumentNullException(nameof(item));
             }
 
-            MockData.Groups[item.Id] = item;
+            Context.Groups.Add(item);
+            Context.SaveChanges();
             return item;
         }
 
         public Group? GetItem(int id)
-        {
-            if (MockData.Groups.TryGetValue(id, out Group? user))
-            {
-                return user;
-            }
-            return null;
-        }
+            => List().FirstOrDefault<Group>(i => i.Id == id);
 
         public ICollection<Group> List()
-        {
-            return MockData.Groups.Values;
-        }
+            => Context.Groups
+                .Include(group => group.Users)
+                .Include(group => group.Assignments)
+                .ToList();
 
         public bool Remove(int id)
         {
-            return MockData.Groups.Remove(id);
+            Group item = Context.Groups.Find(id);
+            Context.Groups.Remove(item);
+            Context.SaveChanges();
+            return true;
         }
 
-        public void Save(Group item)
+        public void Save(Group? item)
         {
             if (item is null)
             {
                 throw new ArgumentNullException(nameof(item));
             }
 
-            MockData.Groups[item.Id] = item;
+            Context.Groups.Update(item);
+            Context.SaveChanges();
         }
 
-        public AssignmentResult GenerateAssignments(int id)
+        public AssignmentResult GenerateAssignments(int groupId)
         {
-            //grab and do some checks
-            Group group = GetItem(id);
+            Group? @group = GetItem(groupId);
 
             if (group is null)
             {
-                throw new NullReferenceException();
+                return AssignmentResult.Error("Group not found");
             }
-            if (group.Users.Count < 3)
+
+            Random random = new();
+            var groupUsers = new List<User>(group.Users.ToList());
+
+            if (groupUsers.Count < 3)
             {
-                return AssignmentResult.Error("Sorry, there must be a minimum of three members in a group.");
+                return AssignmentResult.Error($"Group {group.Name} must have at least three users");
             }
-            //begin randomizing.
+
+            var users = new List<User>();
+
+            while (groupUsers.Count > 0)
+            {
+                int index = random.Next(groupUsers.Count);
+                users.Add(groupUsers[index]);
+                groupUsers.RemoveAt(index);
+            }
+
             group.Assignments.Clear();
 
-            List<User> randomizedReceiverList = group.Users;
-            Shuffle(randomizedReceiverList);
-            
-            for (int i = 0; i < group.Users.Count; i++)
+            for (int i = 0; i < users.Count; i++)
             {
-                MockData.Groups[id].Assignments.Add(i < randomizedReceiverList.Count - 1
-                    ? new Assignment(randomizedReceiverList[i], randomizedReceiverList[i + 1])
-                    : new Assignment(randomizedReceiverList[i], randomizedReceiverList[0]));
-            }
-            return AssignmentResult.Success();
-        }
+                int endIndex = (i + 1) % users.Count;
+                User Giver = Context.Users.Find(users[i].Id);
+                User Receiver = Context.Users.Find(users[endIndex].Id);
 
-        //list shuffling method from stack overflow
-        //source - https://stackoverflow.com/questions/273313/randomize-a-listt
-        private void Shuffle<T>(IList<T> list)
-        {
-            if (list == null)
-            {
-                throw new NullReferenceException();
+                Assignment newAssignment = new Assignment(Giver, Receiver);
+                group.Assignments.Add(newAssignment); 
             }
-          
-            int n = list.Count;
-            while (n > 1)
-            {
-                n--;
-                int k = rng.Next(n + 1);
-                T value = list[k];
-                list[k] = list[n];
-                list[n] = value;
-            }
+
+            Save(@group);
+
+            return AssignmentResult.Success();
         }
     }
 }
