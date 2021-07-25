@@ -12,6 +12,8 @@ module.exports = {
                 'baby-blue-dark': '#87A8D0',
                 'christmas-green':'#5B8C5A',
                 'christmas-red': "#90303D",
+                'gold': "#FFDF6B",
+                'gold2': "#FCD47D"
             },
             animation:{
                 blob: "blob 7s infinite",
