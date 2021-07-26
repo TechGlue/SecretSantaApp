@@ -848,6 +848,7 @@ export class User implements IUser {
     id!: number;
     firstName?: string | undefined;
     lastName?: string | undefined;
+    email?: string | undefined;
 
     constructor(data?: IUser) {
         if (data) {
@@ -863,6 +864,7 @@ export class User implements IUser {
             this.id = _data["id"];
             this.firstName = _data["firstName"];
             this.lastName = _data["lastName"];
+            this.email = _data["email"];
         }
     }
 
@@ -878,6 +880,7 @@ export class User implements IUser {
         data["id"] = this.id;
         data["firstName"] = this.firstName;
         data["lastName"] = this.lastName;
+        data["email"] = this.email;
         return data; 
     }
 }
@@ -886,6 +889,7 @@ export interface IUser {
     id: number;
     firstName?: string | undefined;
     lastName?: string | undefined;
+    email?: string | undefined;
 }
 
 export class Assignment implements IAssignment {
@@ -1035,6 +1039,7 @@ export interface IUpdateGroup {
 export class UpdateUser implements IUpdateUser {
     firstName?: string | undefined;
     lastName?: string | undefined;
+    email?: string | undefined;
 
     constructor(data?: IUpdateUser) {
         if (data) {
@@ -1049,6 +1054,7 @@ export class UpdateUser implements IUpdateUser {
         if (_data) {
             this.firstName = _data["firstName"];
             this.lastName = _data["lastName"];
+            this.email = _data["email"];
         }
     }
 
@@ -1063,6 +1069,7 @@ export class UpdateUser implements IUpdateUser {
         data = typeof data === 'object' ? data : {};
         data["firstName"] = this.firstName;
         data["lastName"] = this.lastName;
+        data["email"] = this.email;
         return data; 
     }
 }
@@ -1070,6 +1077,7 @@ export class UpdateUser implements IUpdateUser {
 export interface IUpdateUser {
     firstName?: string | undefined;
     lastName?: string | undefined;
+    email?: string | undefined;
 }
 
 export class ApiException extends Error {
