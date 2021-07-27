@@ -779,6 +779,9 @@ export class UsersClient implements IUsersClient {
 export class Group implements IGroup {
     id!: number;
     name?: string | undefined;
+    date?: string | undefined;
+    time?: string | undefined;
+    location?: string | undefined;
     users!: User[];
     assignments!: Assignment[];
 
@@ -799,6 +802,9 @@ export class Group implements IGroup {
         if (_data) {
             this.id = _data["id"];
             this.name = _data["name"];
+            this.date = _data["date"];
+            this.time = _data["time"];
+            this.location = _data["location"];
             if (Array.isArray(_data["users"])) {
                 this.users = [] as any;
                 for (let item of _data["users"])
@@ -823,6 +829,9 @@ export class Group implements IGroup {
         data = typeof data === 'object' ? data : {};
         data["id"] = this.id;
         data["name"] = this.name;
+        data["date"] = this.date;
+        data["time"] = this.time;
+        data["location"] = this.location;
         if (Array.isArray(this.users)) {
             data["users"] = [];
             for (let item of this.users)
@@ -840,6 +849,9 @@ export class Group implements IGroup {
 export interface IGroup {
     id: number;
     name?: string | undefined;
+    date?: string | undefined;
+    time?: string | undefined;
+    location?: string | undefined;
     users: User[];
     assignments: Assignment[];
 }

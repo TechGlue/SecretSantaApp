@@ -12,5 +12,4 @@ namespace SecretSanta.Business
         void Save(Group item);
         AssignmentResult GenerateAssignments(int id);
     }
-
 }
