@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using SecretSanta.Data;
 
 namespace SecretSanta.Business
@@ -10,6 +11,8 @@ namespace SecretSanta.Business
         bool Remove(int id);
         Group Create(Group item);
         void Save(Group item);
+        String ChangeTimeFormat(int id);
         AssignmentResult GenerateAssignments(int id);
+        
     }
 }

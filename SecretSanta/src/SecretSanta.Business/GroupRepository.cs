@@ -55,6 +55,39 @@ namespace SecretSanta.Business
             Context.SaveChanges();
         }
 
+        public String ChangeTimeFormat(int groupId)
+        {
+            Group? @group = GetItem(groupId);
+
+            if (group == null)
+            {
+                throw new ArgumentNullException(nameof(group));
+            }
+
+            char[] TimeArray = group.Time.ToCharArray();
+            
+            String hours = "";
+            String minutes = "";
+
+            hours += TimeArray[0];
+            hours += TimeArray[1];
+
+            minutes += TimeArray[3];
+            minutes += TimeArray[4];
+
+            if (Int32.Parse(hours) > 12)
+            {
+                int convertedHours = Int32.Parse(hours);
+                convertedHours = convertedHours - 12;
+                hours = convertedHours.ToString();
+
+                group.Time = hours + ":" + minutes + " PM";
+                return group.Time;
+            }
+                group.Time += " AM";
+                return group.Time;
+        }
+
         public AssignmentResult GenerateAssignments(int groupId)
         {
             Group? @group = GetItem(groupId);

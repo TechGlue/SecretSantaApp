@@ -123,5 +123,22 @@ namespace SecretSanta.Api.Controllers
             return Ok();
         }
         
+        
+        [HttpPut("{id}/convert")]
+        [ProducesResponseType(typeof(string), (int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
+        public ActionResult ChangeTimeFormat(int id)
+        {
+            Data.Group? foundGroup = GroupRepository.GetItem(id);
+
+            if (foundGroup is not null)
+            {
+                GroupRepository.ChangeTimeFormat(id);
+                return Ok();
+            }
+
+            return NotFound();
+        }
+        
     }
 }
