@@ -2,11 +2,10 @@
     <template x-for="(currentGroup, index) in groups" :key="index">
         <section class="w-full sm:w-1/3">
             <a :href="`https://localhost:5001/groups/edit/${currentGroup.id}`">
-                <section x-init="ChangeTimeTo12hr(currentGroup.id)" class="border-gray-500 hover:shadow-xl border-2 p-6 m-5 rounded-xl justify-between">
+                <section class="border-gray-500 hover:shadow-xl border-2 p-6 m-5 rounded-xl justify-between">
                     <div class="inline-grid"><span x-text="currentGroup.name"></span></div>
                     <div class="inline-grid"><span x-text="currentGroup.date"></span></div>
                     <div class=""><span x-text="currentGroup.time"></span></div>
-                    <div class=""><span x-text="currentGroup.location"></span></div>
                     <button class="-mt-6" @@click.prevent="deleteGroup(currentGroup)"><i class="fas fa-trash text-gray-700 hover:text-red-700"></i></button>
                 </section>
             </a>
