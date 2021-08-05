@@ -63,6 +63,9 @@ namespace SecretSanta.Api.Controllers
             if (foundGroup is not null)
             {
                 foundGroup.Name = group?.Name ?? "";
+                foundGroup.Date = group?.Date ?? "";
+                foundGroup.Time = group?.Time ?? "";
+                foundGroup.Location = group?.Locations ?? "";
 
                 GroupRepository.Save(foundGroup);
                 return Ok();

@@ -1067,6 +1067,9 @@ export interface IProblemDetails {
 
 export class UpdateGroup implements IUpdateGroup {
     name?: string | undefined;
+    date?: string | undefined;
+    time?: string | undefined;
+    locations?: string | undefined;
 
     constructor(data?: IUpdateGroup) {
         if (data) {
@@ -1080,6 +1083,9 @@ export class UpdateGroup implements IUpdateGroup {
     init(_data?: any) {
         if (_data) {
             this.name = _data["name"];
+            this.date = _data["date"];
+            this.time = _data["time"];
+            this.locations = _data["locations"];
         }
     }
 
@@ -1093,12 +1099,18 @@ export class UpdateGroup implements IUpdateGroup {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["name"] = this.name;
+        data["date"] = this.date;
+        data["time"] = this.time;
+        data["locations"] = this.locations;
         return data; 
     }
 }
 
 export interface IUpdateGroup {
     name?: string | undefined;
+    date?: string | undefined;
+    time?: string | undefined;
+    locations?: string | undefined;
 }
 
 export class UpdateUser implements IUpdateUser {
