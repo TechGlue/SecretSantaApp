@@ -63,6 +63,9 @@ namespace SecretSanta.Api.Controllers
             if (foundGroup is not null)
             {
                 foundGroup.Name = group?.Name ?? "";
+                foundGroup.Date = group?.Date ?? "";
+                foundGroup.Time = group?.Time ?? "";
+                foundGroup.Location = group?.Locations ?? "";
 
                 GroupRepository.Save(foundGroup);
                 return Ok();
@@ -121,6 +124,23 @@ namespace SecretSanta.Api.Controllers
                 return BadRequest(result.ErrorMessage);
             }
             return Ok();
+        }
+        
+        
+        [HttpPut("{id}/convert")]
+        [ProducesResponseType(typeof(string), (int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
+        public ActionResult ChangeTimeFormat(int id)
+        {
+            Data.Group? foundGroup = GroupRepository.GetItem(id);
+
+            if (foundGroup is not null)
+            {
+                GroupRepository.ChangeTimeFormat(id);
+                return Ok();
+            }
+
+            return NotFound();
         }
         
     }

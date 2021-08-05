@@ -9,6 +9,15 @@ namespace SecretSanta.Data
         public int Id { get; set; }
         [Required] 
         public string Name { get; set; } = "";
+
+        [Required]
+        public string Date { get; set; } = "";
+
+        [Required]
+        public string Time { get; set; } = "";
+
+        [Required]
+        public string Location { get; set; } = "";
         public List<User>? Users { get; } = new();
         public List<Assignment>? Assignments { get;} = new();
     }

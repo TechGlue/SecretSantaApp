@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SecretSanta.Data;
 
 namespace SecretSanta.Data.Migrations
 {
     [DbContext(typeof(SecretSantaContext))]
-    partial class SecretSantaContextModelSnapshot : ModelSnapshot
+    [Migration("20210726000127_changesToInitializer")]
+    partial class changesToInitializer
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -69,19 +71,7 @@ namespace SecretSanta.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("Date")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Location")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
                     b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Time")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
@@ -93,18 +83,12 @@ namespace SecretSanta.Data.Migrations
                         new
                         {
                             Id = 1,
-                            Date = "",
-                            Location = "",
-                            Name = "Pedro's pizza",
-                            Time = ""
+                            Name = "Pedro's pizza"
                         },
                         new
                         {
                             Id = 2,
-                            Date = "",
-                            Location = "",
-                            Name = "Pedro's Diner",
-                            Time = ""
+                            Name = "Pedro's Diner"
                         });
                 });
 

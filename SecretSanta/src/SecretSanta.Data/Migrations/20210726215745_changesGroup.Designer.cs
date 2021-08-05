@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SecretSanta.Data;
 
 namespace SecretSanta.Data.Migrations
 {
     [DbContext(typeof(SecretSantaContext))]
-    partial class SecretSantaContextModelSnapshot : ModelSnapshot
+    [Migration("20210726215745_changesGroup")]
+    partial class changesGroup
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -81,10 +83,6 @@ namespace SecretSanta.Data.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Time")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
                     b.HasKey("Id");
 
                     b.ToTable("Groups");
@@ -95,16 +93,14 @@ namespace SecretSanta.Data.Migrations
                             Id = 1,
                             Date = "",
                             Location = "",
-                            Name = "Pedro's pizza",
-                            Time = ""
+                            Name = "Pedro's pizza"
                         },
                         new
                         {
                             Id = 2,
                             Date = "",
                             Location = "",
-                            Name = "Pedro's Diner",
-                            Time = ""
+                            Name = "Pedro's Diner"
                         });
                 });
 

@@ -7,6 +7,7 @@ module.exports = {
             }),
             colors:
             {
+                'baby-blue-dumb-light':'#eaf3fd',
                 'baby-blue-lighter': '#DEECFC',
                 'baby-blue': '#B9CEEB',
                 'baby-blue-dark': '#87A8D0',

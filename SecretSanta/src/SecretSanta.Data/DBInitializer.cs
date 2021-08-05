@@ -9,9 +9,9 @@ namespace SecretSanta.Data
         {
             return new List<User>
             {
-                new User() {Id = 1, FirstName = "Luis", LastName = "Garcia"},
-                new User(){ Id = 2, FirstName = "Jeff", LastName = "Kapplan"},
-                new User(){ Id = 3, FirstName = "Terry", LastName = "Crews"}
+                new User() {Id = 1, FirstName = "Luis", LastName = "Garcia", Email = "sussy@gmail.com"},
+                new User(){ Id = 2, FirstName = "Jeff", LastName = "Kapplan", Email = "sussy@gmail.com"},
+                new User(){ Id = 3, FirstName = "Terry", LastName = "Crews",  Email = "sussy@gmail.com"}
             };
         }
 

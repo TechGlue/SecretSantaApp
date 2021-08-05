@@ -6,6 +6,12 @@ namespace SecretSanta.Api.Dto
     {
         public int Id { get; set; }
         public string? Name { get; set; }
+        
+        public string? Date { get; set; }
+
+        public string? Time { get; set; }
+
+        public string? Location { get; set; }
 
         public List<User> Users { get; } = new();
         public List<Assignment> Assignments { get; } = new();
@@ -16,7 +22,10 @@ namespace SecretSanta.Api.Dto
             var rv = new Group
             {
                 Id = group.Id,
-                Name = group.Name
+                Name = group.Name,
+                Date = group.Date,
+                Time = group.Time,
+                Location = group.Location
             };
             if (includeChildObjects)
             {
@@ -45,6 +54,9 @@ namespace SecretSanta.Api.Dto
             {
                 Id = group.Id,
                 Name = group.Name ?? "",
+                Date = group.Date ?? "",
+                Time = group.Time ?? "",
+                Location = group.Location ?? ""
             };
         }
     }

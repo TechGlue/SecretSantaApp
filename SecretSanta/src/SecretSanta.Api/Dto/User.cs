@@ -5,6 +5,7 @@
         public int Id { get; set; }
         public string? FirstName { get; set; }
         public string? LastName { get; set; }
+        public string? Email { get; set; }
 
         public static User? ToDto(Data.User? user)
         {
@@ -13,7 +14,8 @@
             {
                 FirstName = user.FirstName,
                 Id = user.Id,
-                LastName = user.LastName
+                LastName = user.LastName,
+                Email = user.Email
             };
         }
 
@@ -24,7 +26,8 @@
             {
                 Id = user.Id,
                 FirstName = user.FirstName ?? "",
-                LastName = user.LastName ?? ""
+                LastName = user.LastName ?? "",
+                Email = user.Email ?? ""
             };
         }
     }

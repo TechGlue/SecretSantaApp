@@ -18,6 +18,7 @@ export interface IGroupsClient {
     remove(id: number, userId: number): Promise<void>;
     add(id: number, userId: number): Promise<void>;
     generateAssignments(id: number): Promise<void>;
+    changeTimeFormat(id: number): Promise<void>;
 }
 
 export class GroupsClient implements IGroupsClient {
@@ -480,6 +481,58 @@ export class GroupsClient implements IGroupsClient {
         }
         return Promise.resolve<void>(<any>null);
     }
+
+    changeTimeFormat(id: number , cancelToken?: CancelToken | undefined): Promise<void> {
+        let url_ = this.baseUrl + "/api/Groups/{id}/convert";
+        if (id === undefined || id === null)
+            throw new Error("The parameter 'id' must be defined.");
+        url_ = url_.replace("{id}", encodeURIComponent("" + id));
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ = <AxiosRequestConfig>{
+            method: "PUT",
+            url: url_,
+            headers: {
+            },
+            cancelToken
+        };
+
+        return this.instance.request(options_).catch((_error: any) => {
+            if (isAxiosError(_error) && _error.response) {
+                return _error.response;
+            } else {
+                throw _error;
+            }
+        }).then((_response: AxiosResponse) => {
+            return this.processChangeTimeFormat(_response);
+        });
+    }
+
+    protected processChangeTimeFormat(response: AxiosResponse): Promise<void> {
+        const status = response.status;
+        let _headers: any = {};
+        if (response.headers && typeof response.headers === "object") {
+            for (let k in response.headers) {
+                if (response.headers.hasOwnProperty(k)) {
+                    _headers[k] = response.headers[k];
+                }
+            }
+        }
+        if (status === 400) {
+            const _responseText = response.data;
+            let result400: any = null;
+            let resultData400  = _responseText;
+            result400 = resultData400 !== undefined ? resultData400 : <any>null;
+            return throwException("A server side error occurred.", status, _responseText, _headers, result400);
+        } else if (status === 200) {
+            const _responseText = response.data;
+            return Promise.resolve<void>(<any>null);
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.data;
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Promise.resolve<void>(<any>null);
+    }
 }
 
 export interface IUsersClient {
@@ -779,6 +832,9 @@ export class UsersClient implements IUsersClient {
 export class Group implements IGroup {
     id!: number;
     name?: string | undefined;
+    date?: string | undefined;
+    time?: string | undefined;
+    location?: string | undefined;
     users!: User[];
     assignments!: Assignment[];
 
@@ -799,6 +855,9 @@ export class Group implements IGroup {
         if (_data) {
             this.id = _data["id"];
             this.name = _data["name"];
+            this.date = _data["date"];
+            this.time = _data["time"];
+            this.location = _data["location"];
             if (Array.isArray(_data["users"])) {
                 this.users = [] as any;
                 for (let item of _data["users"])
@@ -823,6 +882,9 @@ export class Group implements IGroup {
         data = typeof data === 'object' ? data : {};
         data["id"] = this.id;
         data["name"] = this.name;
+        data["date"] = this.date;
+        data["time"] = this.time;
+        data["location"] = this.location;
         if (Array.isArray(this.users)) {
             data["users"] = [];
             for (let item of this.users)
@@ -840,6 +902,9 @@ export class Group implements IGroup {
 export interface IGroup {
     id: number;
     name?: string | undefined;
+    date?: string | undefined;
+    time?: string | undefined;
+    location?: string | undefined;
     users: User[];
     assignments: Assignment[];
 }
@@ -848,6 +913,7 @@ export class User implements IUser {
     id!: number;
     firstName?: string | undefined;
     lastName?: string | undefined;
+    email?: string | undefined;
 
     constructor(data?: IUser) {
         if (data) {
@@ -863,6 +929,7 @@ export class User implements IUser {
             this.id = _data["id"];
             this.firstName = _data["firstName"];
             this.lastName = _data["lastName"];
+            this.email = _data["email"];
         }
     }
 
@@ -878,6 +945,7 @@ export class User implements IUser {
         data["id"] = this.id;
         data["firstName"] = this.firstName;
         data["lastName"] = this.lastName;
+        data["email"] = this.email;
         return data; 
     }
 }
@@ -886,6 +954,7 @@ export interface IUser {
     id: number;
     firstName?: string | undefined;
     lastName?: string | undefined;
+    email?: string | undefined;
 }
 
 export class Assignment implements IAssignment {
@@ -998,6 +1067,9 @@ export interface IProblemDetails {
 
 export class UpdateGroup implements IUpdateGroup {
     name?: string | undefined;
+    date?: string | undefined;
+    time?: string | undefined;
+    locations?: string | undefined;
 
     constructor(data?: IUpdateGroup) {
         if (data) {
@@ -1011,6 +1083,9 @@ export class UpdateGroup implements IUpdateGroup {
     init(_data?: any) {
         if (_data) {
             this.name = _data["name"];
+            this.date = _data["date"];
+            this.time = _data["time"];
+            this.locations = _data["locations"];
         }
     }
 
@@ -1024,17 +1099,24 @@ export class UpdateGroup implements IUpdateGroup {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["name"] = this.name;
+        data["date"] = this.date;
+        data["time"] = this.time;
+        data["locations"] = this.locations;
         return data; 
     }
 }
 
 export interface IUpdateGroup {
     name?: string | undefined;
+    date?: string | undefined;
+    time?: string | undefined;
+    locations?: string | undefined;
 }
 
 export class UpdateUser implements IUpdateUser {
     firstName?: string | undefined;
     lastName?: string | undefined;
+    email?: string | undefined;
 
     constructor(data?: IUpdateUser) {
         if (data) {
@@ -1049,6 +1131,7 @@ export class UpdateUser implements IUpdateUser {
         if (_data) {
             this.firstName = _data["firstName"];
             this.lastName = _data["lastName"];
+            this.email = _data["email"];
         }
     }
 
@@ -1063,6 +1146,7 @@ export class UpdateUser implements IUpdateUser {
         data = typeof data === 'object' ? data : {};
         data["firstName"] = this.firstName;
         data["lastName"] = this.lastName;
+        data["email"] = this.email;
         return data; 
     }
 }
@@ -1070,6 +1154,7 @@ export class UpdateUser implements IUpdateUser {
 export interface IUpdateUser {
     firstName?: string | undefined;
     lastName?: string | undefined;
+    email?: string | undefined;
 }
 
 export class ApiException extends Error {
