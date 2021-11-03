@@ -1,6 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
-
+using System.ComponentModel.DataAnnotations.Schema;
 namespace SecretSanta.Data
 {
     public class Assignment
@@ -9,21 +9,17 @@ namespace SecretSanta.Data
         public int id { get; set; }
         public User Giver { get; set; }
         public User Receiver { get; set; }
-        public String Giver_Receiver { get; set; }
+        public Group Group { get; set; }
 
-        public Assignment(User giver, User recipient)
+        public Assignment(User giver, User recipient, Group group)
         {
             Giver = giver ?? throw new ArgumentNullException(nameof(giver));
             Receiver = recipient ?? throw new ArgumentNullException(nameof(recipient));
-
-            Giver_Receiver = giver.FirstName + " " + recipient.LastName;
+            Group = group ?? throw new ArgumentNullException(nameof(group));
         }
 
         public Assignment()
-        {
-            Giver = new User();
-            Receiver = new User();
-        }
+        {}
         
         
     }

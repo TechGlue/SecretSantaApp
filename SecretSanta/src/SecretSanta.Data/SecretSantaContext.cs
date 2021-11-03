@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 
@@ -5,24 +6,33 @@ namespace SecretSanta.Data
 {
     public class SecretSantaContext : DbContext
     {
-        public DbSet<User> Users { get; set; }
-        public DbSet<Group> Groups { get; set; }
-        public DbSet<GroupAssignment> GroupAssignments { get; set; }
-        protected override void OnConfiguring(DbContextOptionsBuilder options)
+        public DbSet<User> Users => Set<User>();
+        public DbSet<Group> Groups => Set<Group>();
+
+        public SecretSantaContext()
         {
-            options.UseSqlite("Data Source = main.db");
+        }
+        public SecretSantaContext(DbContextOptions options) : base(options)
+        {
+            Database.Migrate();
         }
 
+        protected override void OnConfiguring(DbContextOptionsBuilder options)
+        {
+            if (!options.IsConfigured)
+            {
+                options.UseSqlite("Fall back");
+            }
+        }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             if (modelBuilder != null)
             {
-                modelBuilder.Entity<Assignment>()
-                    .HasAlternateKey(a => new {a.Giver_Receiver});
+                throw new ArgumentNullException(nameof(modelBuilder));
             }
 
-            modelBuilder.Entity<User>().HasData((DbInitializer.Users()));
-            modelBuilder.Entity<Group>().HasData(DbInitializer.Groups());
+            // modelBuilder.Entity<User>().HasData((DbInitializer.Users()));
+            // modelBuilder.Entity<Group>().HasData(DbInitializer.Groups());
         }
     }
 }
