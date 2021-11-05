@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SecretSanta.Data;
 
 namespace SecretSanta.Data.Migrations
 {
     [DbContext(typeof(SecretSantaContext))]
-    partial class SecretSantaContextModelSnapshot : ModelSnapshot
+    [Migration("20211105082233_re-initialize")]
+    partial class reinitialize
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -82,6 +84,24 @@ namespace SecretSanta.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Groups");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Date = "",
+                            Location = "",
+                            Name = "Pedro's pizza",
+                            Time = ""
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Date = "",
+                            Location = "",
+                            Name = "Pedro's Diner",
+                            Time = ""
+                        });
                 });
 
             modelBuilder.Entity("SecretSanta.Data.User", b =>
@@ -105,6 +125,29 @@ namespace SecretSanta.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Email = "sussy@gmail.com",
+                            FirstName = "Luis",
+                            LastName = "Garcia"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Email = "sussy@gmail.com",
+                            FirstName = "Jeff",
+                            LastName = "Kapplan"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Email = "sussy@gmail.com",
+                            FirstName = "Terry",
+                            LastName = "Crews"
+                        });
                 });
 
             modelBuilder.Entity("GroupUser", b =>
