@@ -15,14 +15,22 @@ namespace SecretSanta.Data
             Database.Migrate();
         }
 
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            if(optionsBuilder is null)
+            {
+                throw new ArgumentNullException(nameof(optionsBuilder));
+            }
+        }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             if(modelBuilder is null)
             {
                 throw new ArgumentException(nameof(modelBuilder));
             }
-            // modelBuilder.Entity<User>().HasData((DbInitializer.Users()));
-            // modelBuilder.Entity<Group>().HasData(DbInitializer.Groups());
+            modelBuilder.Entity<User>().HasData((DbInitializer.Users()));
+            modelBuilder.Entity<Group>().HasData(DbInitializer.Groups());
         }
 
     }

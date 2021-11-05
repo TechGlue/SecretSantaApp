@@ -122,8 +122,8 @@ namespace SecretSanta.Business
                 User Giver = Context.Users.Find(users[i].Id);
                 User Receiver = Context.Users.Find(users[endIndex].Id);
 
-                Assignment newAssignment = new Assignment(Giver, Receiver);
-                group.Assignments.Add(newAssignment); 
+                // Assignment newAssignment = new Assignment(Giver, Receiver);
+                // group.Assignments.Add(newAssignment); 
             }
 
             Save(@group);
