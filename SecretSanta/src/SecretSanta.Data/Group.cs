@@ -18,7 +18,8 @@ namespace SecretSanta.Data
 
         [Required]
         public string Location { get; set; } = "";
-        public List<User>? Users { get; } = new();
-        public List<Assignment>? Assignments { get;} = new();
+
+        public List<User>? Users { get; set; } = new();
+        public List<Assignment>? Assignments { get; set;} = new();
     }
 }

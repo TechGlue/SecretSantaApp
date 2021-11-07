@@ -2,31 +2,20 @@
 
 namespace SecretSanta.Data.Migrations
 {
-    public partial class initialCreate : Migration
+    public partial class restartedMigrations : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.CreateTable(
-                name: "GroupAssignments",
-                columns: table => new
-                {
-                    GroupAssignmentId = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    GroupId = table.Column<int>(type: "INTEGER", nullable: false),
-                    AssignmentId = table.Column<int>(type: "INTEGER", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_GroupAssignments", x => x.GroupAssignmentId);
-                });
-
             migrationBuilder.CreateTable(
                 name: "Groups",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Name = table.Column<string>(type: "TEXT", nullable: false)
+                    Name = table.Column<string>(type: "TEXT", nullable: false),
+                    Date = table.Column<string>(type: "TEXT", nullable: false),
+                    Time = table.Column<string>(type: "TEXT", nullable: false),
+                    Location = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -40,7 +29,8 @@ namespace SecretSanta.Data.Migrations
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     FirstName = table.Column<string>(type: "TEXT", nullable: false),
-                    LastName = table.Column<string>(type: "TEXT", nullable: false)
+                    LastName = table.Column<string>(type: "TEXT", nullable: false),
+                    Email = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -53,17 +43,29 @@ namespace SecretSanta.Data.Migrations
                 {
                     id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Giver_Receiver = table.Column<string>(type: "TEXT", nullable: false),
-                    GroupId = table.Column<int>(type: "INTEGER", nullable: true)
+                    GiverId = table.Column<int>(type: "INTEGER", nullable: true),
+                    ReceiverId = table.Column<int>(type: "INTEGER", nullable: true),
+                    GroupId = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Assignment", x => x.id);
-                    table.UniqueConstraint("AK_Assignment_Giver_Receiver", x => x.Giver_Receiver);
                     table.ForeignKey(
                         name: "FK_Assignment_Groups_GroupId",
                         column: x => x.GroupId,
                         principalTable: "Groups",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Assignment_Users_GiverId",
+                        column: x => x.GiverId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Assignment_Users_ReceiverId",
+                        column: x => x.ReceiverId,
+                        principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -92,10 +94,45 @@ namespace SecretSanta.Data.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.InsertData(
+                table: "Groups",
+                columns: new[] { "Id", "Date", "Location", "Name", "Time" },
+                values: new object[] { 1, "", "", "Pedro's pizza", "" });
+
+            migrationBuilder.InsertData(
+                table: "Groups",
+                columns: new[] { "Id", "Date", "Location", "Name", "Time" },
+                values: new object[] { 2, "", "", "Pedro's Diner", "" });
+
+            migrationBuilder.InsertData(
+                table: "Users",
+                columns: new[] { "Id", "Email", "FirstName", "LastName" },
+                values: new object[] { 1, "sussy@gmail.com", "Luis", "Garcia" });
+
+            migrationBuilder.InsertData(
+                table: "Users",
+                columns: new[] { "Id", "Email", "FirstName", "LastName" },
+                values: new object[] { 2, "sussy@gmail.com", "Jeff", "Kapplan" });
+
+            migrationBuilder.InsertData(
+                table: "Users",
+                columns: new[] { "Id", "Email", "FirstName", "LastName" },
+                values: new object[] { 3, "sussy@gmail.com", "Terry", "Crews" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Assignment_GiverId",
+                table: "Assignment",
+                column: "GiverId");
+
             migrationBuilder.CreateIndex(
                 name: "IX_Assignment_GroupId",
                 table: "Assignment",
                 column: "GroupId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Assignment_ReceiverId",
+                table: "Assignment",
+                column: "ReceiverId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_GroupUser_UsersId",
@@ -107,9 +144,6 @@ namespace SecretSanta.Data.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Assignment");
-
-            migrationBuilder.DropTable(
-                name: "GroupAssignments");
 
             migrationBuilder.DropTable(
                 name: "GroupUser");

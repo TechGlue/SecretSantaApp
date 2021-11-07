@@ -14,7 +14,7 @@ namespace SecretSanta.Data.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "5.0.7");
+                .HasAnnotation("ProductVersion", "5.0.11");
 
             modelBuilder.Entity("GroupUser", b =>
                 {
@@ -40,19 +40,13 @@ namespace SecretSanta.Data.Migrations
                     b.Property<int?>("GiverId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("Giver_Receiver")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<int?>("GroupId")
+                    b.Property<int>("GroupId")
                         .HasColumnType("INTEGER");
 
                     b.Property<int?>("ReceiverId")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("id");
-
-                    b.HasAlternateKey("Giver_Receiver");
 
                     b.HasIndex("GiverId");
 
@@ -106,23 +100,6 @@ namespace SecretSanta.Data.Migrations
                             Name = "Pedro's Diner",
                             Time = ""
                         });
-                });
-
-            modelBuilder.Entity("SecretSanta.Data.GroupAssignment", b =>
-                {
-                    b.Property<int>("GroupAssignmentId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("AssignmentId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("GroupId")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("GroupAssignmentId");
-
-                    b.ToTable("GroupAssignments");
                 });
 
             modelBuilder.Entity("SecretSanta.Data.User", b =>
@@ -192,15 +169,19 @@ namespace SecretSanta.Data.Migrations
                         .WithMany()
                         .HasForeignKey("GiverId");
 
-                    b.HasOne("SecretSanta.Data.Group", null)
+                    b.HasOne("SecretSanta.Data.Group", "Group")
                         .WithMany("Assignments")
-                        .HasForeignKey("GroupId");
+                        .HasForeignKey("GroupId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("SecretSanta.Data.User", "Receiver")
                         .WithMany()
                         .HasForeignKey("ReceiverId");
 
                     b.Navigation("Giver");
+
+                    b.Navigation("Group");
 
                     b.Navigation("Receiver");
                 });

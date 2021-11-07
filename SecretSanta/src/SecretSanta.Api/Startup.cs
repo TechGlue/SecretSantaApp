@@ -37,13 +37,6 @@ namespace SecretSanta.Api
             {
                 app.UseDeveloperExceptionPage();
             }
-            
-            using (IServiceScope? serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>()?.CreateScope())
-            {
-                SecretSantaContext? context = serviceScope?.ServiceProvider.GetRequiredService<SecretSantaContext>();
-                context.Database.EnsureDeleted();
-                context.Database.EnsureCreated();
-            }
 
             app.UseOpenApi();
             app.UseSwaggerUi3();

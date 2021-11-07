@@ -1,26 +1,31 @@
+using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
-
+using  Microsoft.EntityFrameworkCore.Metadata.Builders;
 namespace SecretSanta.Data
 {
     public class SecretSantaContext : DbContext
     {
-        public DbSet<User> Users { get; set; }
-        public DbSet<Group> Groups { get; set; }
-        public DbSet<GroupAssignment> GroupAssignments { get; set; }
-        protected override void OnConfiguring(DbContextOptionsBuilder options)
+        public DbSet<User> Users => Set<User>();
+        public DbSet<Group> Groups => Set<Group>();
+        public SecretSantaContext() :base(new DbContextOptionsBuilder<SecretSantaContext>()
+            .EnableSensitiveDataLogging().UseSqlite("Data Source=main.db").Options)
         {
-            options.UseSqlite("Data Source = main.db");
+            Database.Migrate();
         }
-
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            if(optionsBuilder is null)
+            {
+                throw new ArgumentNullException(nameof(optionsBuilder));
+            }
+        }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            if (modelBuilder != null)
+            if(modelBuilder is null)
             {
-                modelBuilder.Entity<Assignment>()
-                    .HasAlternateKey(a => new {a.Giver_Receiver});
+                throw new ArgumentException(nameof(modelBuilder));
             }
-
             modelBuilder.Entity<User>().HasData((DbInitializer.Users()));
             modelBuilder.Entity<Group>().HasData(DbInitializer.Groups());
         }

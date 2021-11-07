@@ -9,14 +9,14 @@ using SecretSanta.Data;
 namespace SecretSanta.Data.Migrations
 {
     [DbContext(typeof(SecretSantaContext))]
-    [Migration("20210725004226_changedUsers")]
-    partial class changedUsers
+    [Migration("20211107094746_restartedMigrations")]
+    partial class restartedMigrations
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "5.0.7");
+                .HasAnnotation("ProductVersion", "5.0.11");
 
             modelBuilder.Entity("GroupUser", b =>
                 {
@@ -42,19 +42,13 @@ namespace SecretSanta.Data.Migrations
                     b.Property<int?>("GiverId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("Giver_Receiver")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<int?>("GroupId")
+                    b.Property<int>("GroupId")
                         .HasColumnType("INTEGER");
 
                     b.Property<int?>("ReceiverId")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("id");
-
-                    b.HasAlternateKey("Giver_Receiver");
 
                     b.HasIndex("GiverId");
 
@@ -71,7 +65,19 @@ namespace SecretSanta.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<string>("Date")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Location")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Time")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
@@ -83,30 +89,19 @@ namespace SecretSanta.Data.Migrations
                         new
                         {
                             Id = 1,
-                            Name = "Pedro's pizza"
+                            Date = "",
+                            Location = "",
+                            Name = "Pedro's pizza",
+                            Time = ""
                         },
                         new
                         {
                             Id = 2,
-                            Name = "Pedro's Diner"
+                            Date = "",
+                            Location = "",
+                            Name = "Pedro's Diner",
+                            Time = ""
                         });
-                });
-
-            modelBuilder.Entity("SecretSanta.Data.GroupAssignment", b =>
-                {
-                    b.Property<int>("GroupAssignmentId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("AssignmentId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("GroupId")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("GroupAssignmentId");
-
-                    b.ToTable("GroupAssignments");
                 });
 
             modelBuilder.Entity("SecretSanta.Data.User", b =>
@@ -135,21 +130,21 @@ namespace SecretSanta.Data.Migrations
                         new
                         {
                             Id = 1,
-                            Email = "",
+                            Email = "sussy@gmail.com",
                             FirstName = "Luis",
                             LastName = "Garcia"
                         },
                         new
                         {
                             Id = 2,
-                            Email = "",
+                            Email = "sussy@gmail.com",
                             FirstName = "Jeff",
                             LastName = "Kapplan"
                         },
                         new
                         {
                             Id = 3,
-                            Email = "",
+                            Email = "sussy@gmail.com",
                             FirstName = "Terry",
                             LastName = "Crews"
                         });
@@ -176,15 +171,19 @@ namespace SecretSanta.Data.Migrations
                         .WithMany()
                         .HasForeignKey("GiverId");
 
-                    b.HasOne("SecretSanta.Data.Group", null)
+                    b.HasOne("SecretSanta.Data.Group", "Group")
                         .WithMany("Assignments")
-                        .HasForeignKey("GroupId");
+                        .HasForeignKey("GroupId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("SecretSanta.Data.User", "Receiver")
                         .WithMany()
                         .HasForeignKey("ReceiverId");
 
                     b.Navigation("Giver");
+
+                    b.Navigation("Group");
 
                     b.Navigation("Receiver");
                 });
