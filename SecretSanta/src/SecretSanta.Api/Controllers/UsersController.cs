@@ -48,7 +48,13 @@ namespace SecretSanta.Api.Controllers
         [ProducesResponseType(typeof(Dto.User), (int)HttpStatusCode.OK)]
         public ActionResult<Dto.User?> Post([FromBody] Dto.User user)
         {
-            return Dto.User.ToDto(Repository.Create(Dto.User.FromDto(user)!));
+            bool userExists = Repository.GetItem(user.Id) is not null;
+
+            if(userExists)
+                return Conflict("User exists. ");
+
+                return Dto.User.ToDto(Repository.Create(Dto.User.FromDto(user)!));
+
         }
 
         [HttpPut("{id}")]

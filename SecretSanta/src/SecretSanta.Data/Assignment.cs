@@ -20,7 +20,5 @@ namespace SecretSanta.Data
 
         public Assignment()
         {}
-        
-        
     }
 }

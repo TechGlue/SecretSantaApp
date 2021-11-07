@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using  Microsoft.EntityFrameworkCore.Metadata.Builders;
-
 namespace SecretSanta.Data
 {
     public class SecretSantaContext : DbContext
@@ -14,7 +13,6 @@ namespace SecretSanta.Data
         {
             Database.Migrate();
         }
-
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if(optionsBuilder is null)
@@ -22,7 +20,6 @@ namespace SecretSanta.Data
                 throw new ArgumentNullException(nameof(optionsBuilder));
             }
         }
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             if(modelBuilder is null)
@@ -32,6 +29,5 @@ namespace SecretSanta.Data
             modelBuilder.Entity<User>().HasData((DbInitializer.Users()));
             modelBuilder.Entity<Group>().HasData(DbInitializer.Groups());
         }
-
     }
 }
