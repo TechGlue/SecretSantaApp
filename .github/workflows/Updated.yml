@@ -15,20 +15,13 @@ jobs:
 
     steps:
     # checkout the repo
-    - name: checkout
     - uses: actions/checkout@v2
     
     - name: Setup .NET
     - uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 5.0.x
-        
-    - name: Setup node
-    - uses: actions/setup-node@v1
-      with:
-        node-version: '10.x'
 
-    - name: Playwright
     - uses: microsoft/playwright-github-action@v1
 
     #Getting started with Web Build#
