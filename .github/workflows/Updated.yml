@@ -14,14 +14,13 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+
     # checkout the repo
     - uses: actions/checkout@v2
-    
     - name: Setup .NET
-    - uses: actions/setup-dotnet@v1
+      uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: 5.0.x
-
+          dotnet-version: 5.0.x
     - uses: microsoft/playwright-github-action@v1
 
     #Getting started with Web Build#
