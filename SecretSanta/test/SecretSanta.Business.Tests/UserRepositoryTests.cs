@@ -16,21 +16,25 @@ namespace SecretSanta.Business.Tests
             UserRepository sut = new();
 
             sut.Create(null!);
+    
         }
 
         [TestMethod]
         public void Create_WithItem_CanGetItem()
         {
             UserRepository sut = new();
+
             User user = new()
             {
                 Id = 42
             };
+            sut.Remove(user.Id);
 
             User createdUser = sut.Create(user);
-
             User? retrievedUser = sut.GetItem(createdUser.Id);
+
             Assert.AreEqual(user, retrievedUser);
+            sut.Remove(createdUser.Id);
         }
 
         [TestMethod]
@@ -47,13 +51,16 @@ namespace SecretSanta.Business.Tests
         public void GetItem_WithValidId_ReturnsUser()
         {
             UserRepository sut = new();
-            sut.Create(new() 
-            { 
-                Id = 42,
+
+            User newUser = new(){
+                Id = 42, 
                 FirstName = "First",
                 LastName = "Last"
-            });
-
+            };
+            //clearing data base to avoid conflicts.
+            sut.Remove(newUser.Id);
+            sut.Create(newUser);
+            
             User? user = sut.GetItem(42);
 
             Assert.AreEqual(42, user?.Id);
@@ -61,38 +68,21 @@ namespace SecretSanta.Business.Tests
             Assert.AreEqual("Last", user.LastName);
         }
 
-        [TestMethod]
-        public void List_WithUsers_ReturnsAllUser()
-        {
-            UserRepository sut = new();
-            sut.Create(new()
-            {
-                Id = 42,
-                FirstName = "First",
-                LastName = "Last"
-            });
-
-            ICollection<User> users = sut.List();
-
-            Assert.AreEqual(MockData.Users.Count, users.Count);
-            foreach(var mockUser in MockData.Users.Values)
-            {
-                Assert.IsNotNull(users.SingleOrDefault(x => x.FirstName == mockUser.FirstName && x.LastName == mockUser.LastName));
-            }
-        }
-
+        //declare that it is a test method. Once declared we can pass in params using datarow. 
         [TestMethod]
         [DataRow(-1, false)]
         [DataRow(42, true)]
         public void Remove_WithInvalidId_ReturnsTrue(int id, bool expected)
         {
             UserRepository sut = new();
-            sut.Create(new()
-            {
-                Id = 42,
+            User newUser = new(){
+                Id = 42, 
                 FirstName = "First",
                 LastName = "Last"
-            });
+            };
+            //clearing data base to avoid conflicts.
+            sut.Remove(newUser.Id);
+            sut.Create(newUser);  
 
             Assert.AreEqual(expected, sut.Remove(id));
         }
@@ -107,13 +97,24 @@ namespace SecretSanta.Business.Tests
         }
 
         [TestMethod]
-        public void Save_WithValidItem_SavesItem()
+        [DataRow(21)]
+        public void Save_WithValidItem_SavesItem(int id)
         {
             UserRepository sut = new();
 
-            sut.Save(new User() { Id = 42 });
+            User newUser = new(){
+                Id = id, 
+                FirstName = "First",
+                LastName = "Last"
+            };
+            //clearing data base to avoid conflicts.
+            sut.Remove(newUser.Id);
+            sut.Create(newUser);  
+            sut.Save(newUser);
 
-            Assert.AreEqual(42, sut.GetItem(42)?.Id);
+            Assert.IsNotNull(sut.GetItem(id));
+            Assert.AreNotEqual(42, sut.GetItem(id)?.Id);
+            Assert.AreEqual(id, sut.GetItem(id)?.Id);
         }
     }
 }

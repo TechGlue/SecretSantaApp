@@ -7,9 +7,7 @@ namespace SecretSanta.Business
 {
     public class UserRepository : IUserRepository
     {
-        private SecretSantaContext Context { get; }
-        public UserRepository(SecretSantaContext dbContext)
-            => Context = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
+        private SecretSantaContext Context = new SecretSantaContext();
         
         public User Create(User item)
         {

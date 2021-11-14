@@ -9,12 +9,8 @@ namespace SecretSanta.Business
     public class GroupRepository : IGroupRepository
     {
         private Random rng = new Random();
-
-        private SecretSantaContext Context { get; }
-
-        public GroupRepository(SecretSantaContext dbContext)
-            => Context = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
-
+        //instance of our context.
+        private SecretSantaContext Context = new SecretSantaContext();
         public Group Create(Group item)
         {
             if (item is null)
@@ -55,38 +51,38 @@ namespace SecretSanta.Business
             Context.SaveChanges();
         }
 
-        public String ChangeTimeFormat(int groupId)
-        {
-            Group? @group = GetItem(groupId);
+        // public String ChangeTimeFormat(int groupId)
+        // {
+        //     Group? @group = GetItem(groupId);
 
-            if (group == null)
-            {
-                throw new ArgumentNullException(nameof(group));
-            }
+        //     if (group == null)
+        //     {
+        //         throw new ArgumentNullException(nameof(group));
+        //     }
 
-            char[] TimeArray = group.Time.ToCharArray();
+        //     char[] TimeArray = group.Time.ToCharArray();
             
-            String hours = "";
-            String minutes = "";
+        //     String hours = "";
+        //     String minutes = "";
 
-            hours += TimeArray[0];
-            hours += TimeArray[1];
+        //     hours += TimeArray[0];
+        //     hours += TimeArray[1];
 
-            minutes += TimeArray[3];
-            minutes += TimeArray[4];
+        //     minutes += TimeArray[3];
+        //     minutes += TimeArray[4];
 
-            if (Int32.Parse(hours) > 12)
-            {
-                int convertedHours = Int32.Parse(hours);
-                convertedHours = convertedHours - 12;
-                hours = convertedHours.ToString();
+        //     if (Int32.Parse(hours) > 12)
+        //     {
+        //         int convertedHours = Int32.Parse(hours);
+        //         convertedHours = convertedHours - 12;
+        //         hours = convertedHours.ToString();
 
-                group.Time = hours + ":" + minutes + " PM";
-                return group.Time;
-            }
-                group.Time += " AM";
-                return group.Time;
-        }
+        //         group.Time = hours + ":" + minutes + " PM";
+        //         return group.Time;
+        //     }
+        //         group.Time += " AM";
+        //         return group.Time;
+        // }
 
         public AssignmentResult GenerateAssignments(int groupId)
         {
@@ -122,8 +118,8 @@ namespace SecretSanta.Business
                 User Giver = Context.Users.Find(users[i].Id);
                 User Receiver = Context.Users.Find(users[endIndex].Id);
 
-                // Assignment newAssignment = new Assignment(Giver, Receiver);
-                // group.Assignments.Add(newAssignment); 
+                Assignment newAssignment = new Assignment(Giver, Receiver, group);
+                group.Assignments.Add(newAssignment);
             }
 
             Save(@group);
