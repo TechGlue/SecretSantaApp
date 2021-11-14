@@ -17,9 +17,13 @@ jobs:
     # checkout the repo
     - uses: actions/checkout@v2
     - name: Setup .NET
-      uses: actions/setup-dotnet@v1
+    - uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 5.0.x
+    - uses: actions/setup-node@v1
+      with:
+        node-version: '10.x'
+    - uses: microsoft/playwright-github-action@v1
 
     #Getting started with Web Build#
     - name: Get Directory
@@ -32,8 +36,6 @@ jobs:
     - name: npm build
       working-directory: ./SecretSanta/src/SecretSanta.Web/
       run: npm run build:prod
-
-    - uses: microsoft/playwright-github-action@v1
 
     - name: Restore dependencies Web
       working-directory: ./SecretSanta/src/SecretSanta.Web/
