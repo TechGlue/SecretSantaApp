@@ -1,4 +1,4 @@
-name: .NET
+name: Assignment Build And Test
 
 on:
   push:
@@ -8,18 +8,82 @@ on:
 
 jobs:
   build:
-
+    defaults:
+      run:
+        working-directory: ./SecretSanta/
     runs-on: ubuntu-latest
 
-    steps:
-    - uses: actions/checkout@v2
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v1
-      with:
-        dotnet-version: 5.0.x
-    - name: Restore dependencies
+    ##there was a section for steps relook at history if needed.##
+
+    ###Web###
+    - name: Get Directory
+      run: pwd
+      
+    - name: npm install
+      working-directory: ./SecretSanta/src/SecretSanta.Web/
+      run: npm install
+      
+    - name: npm build
+      working-directory: ./SecretSanta/src/SecretSanta.Web/
+      run: npm run build:prod
+
+    - name: Restore dependencies Web
+      working-directory: ./SecretSanta/src/SecretSanta.Web/
       run: dotnet restore
-    - name: Build
+
+    - name: Restore dependencies Web Test
+      working-directory: ./SecretSanta/test/SecretSanta.Web.Tests/
+      run: dotnet restore
+
+    - name: Build Web
+      working-directory: ./SecretSanta/src/SecretSanta.Web/
       run: dotnet build --no-restore
-    - name: Test
+
+    - name: Build Web Tests
+      working-directory: ./SecretSanta/test/SecretSanta.E2E.Tests/
+      run: dotnet build --no-restore 
+
+    - name: Test Web
+      working-directory: ./SecretSanta/test/SecretSanta.E2E.Tests/
       run: dotnet test --no-build --verbosity normal
+
+    ###API###
+
+    - name: Restore dependencies API
+      working-directory: ./SecretSanta/src/SecretSanta.Api/
+      run: dotnet restore
+
+    - name: Restore dependencies API Test
+      working-directory: ./SecretSanta/test/SecretSanta.Api.Tests/
+      run: dotnet restore
+
+    - name: Build API Tests
+      working-directory: ./SecretSanta/test/SecretSanta.Api.Tests/
+      run: dotnet build --no-restore 
+
+    - name: Build API
+      working-directory: ./SecretSanta/src/SecretSanta.Api/
+      run: dotnet build --no-restore
+
+    - name: Test API
+      working-directory: ./SecretSanta/test/SecretSanta.Api.Tests/
+      run: dotnet test --no-build --verbosity normal
+      
+    ###DATA###
+    - name: Build DATA Tests
+      working-directory: ./SecretSanta/test/SecretSanta.Data.Tests/
+      run: dotnet build --no-restore 
+
+    - name: Test Data
+      working-directory: ./SecretSanta/test/SecretSanta.Data.Tests/
+      run: dotnet test --no-build --verbosity normal
+      
+    ###BUSINESS###
+    - name: Build DATA Tests
+      working-directory: ./SecretSanta/test/SecretSanta.Business.Tests/
+      run: dotnet build --no-restore 
+
+    - name: Test Data
+      working-directory: ./SecretSanta/test/SecretSanta.Business.Tests/
+      run: dotnet test --no-build --verbosity normal
+    
