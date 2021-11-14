@@ -11,7 +11,7 @@ namespace SecretSanta.Business
         bool Remove(int id);
         Group Create(Group item);
         void Save(Group item);
-        String ChangeTimeFormat(int id);
+        //String ChangeTimeFormat(int id);
         AssignmentResult GenerateAssignments(int id);
         
     }
