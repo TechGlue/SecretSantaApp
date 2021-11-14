@@ -22,7 +22,6 @@ jobs:
       with:
           dotnet-version: 5.0.x
     - uses: microsoft/playwright-github-action@v1
-    - uses: actions/setup-node@v1
 
     #Getting started with Web Build#
     - name: Get Directory
