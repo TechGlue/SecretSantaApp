@@ -11,11 +11,10 @@ jobs:
     defaults:
       run:
         working-directory: ./SecretSanta/
-    runs-on: ubuntu-latest
 
-    ##there was a section for steps relook at history if needed.##
+    ###there was a section for steps relook at history if needed.###
 
-    ##Web##
+    ###Web###
     - name: Get Directory
       run: pwd
       
