@@ -39,9 +39,9 @@ jobs:
       working-directory: ./SecretSanta/src/SecretSanta.Web/
       run: dotnet restore
 
-    # - name: Restore dependencies E2E Test
-    #   working-directory: ./SecretSanta/test/SecretSanta.E2E.Tests/
-    #   run: dotnet restore
+    - name: Restore dependencies E2E Test
+      working-directory: ./SecretSanta/test/SecretSanta.E2E.Tests/
+      run: dotnet restore
 
     - name: Build Web
       working-directory: ./SecretSanta/src/SecretSanta.Web/
