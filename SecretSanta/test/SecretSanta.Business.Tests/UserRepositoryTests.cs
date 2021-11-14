@@ -16,105 +16,105 @@ namespace SecretSanta.Business.Tests
             UserRepository sut = new();
 
             sut.Create(null!);
+    
         }
 
-        // [TestMethod]
-        // public void Create_WithItem_CanGetItem()
-        // {
-        //     UserRepository sut = new();
+        [TestMethod]
+        public void Create_WithItem_CanGetItem()
+        {
+            UserRepository sut = new();
 
-        //     User user = new()
-        //     {
-        //         Id = 42
-        //     };
+            User user = new()
+            {
+                Id = 42
+            };
+            sut.Remove(user.Id);
 
-        //     User createdUser = sut.Create(user);
+            User createdUser = sut.Create(user);
+            User? retrievedUser = sut.GetItem(createdUser.Id);
 
-        //     User? retrievedUser = sut.GetItem(createdUser.Id);
-        //     Assert.AreEqual(user, retrievedUser);
-        // }
+            Assert.AreEqual(user, retrievedUser);
+            sut.Remove(createdUser.Id);
+        }
 
-        // [TestMethod]
-        // public void GetItem_WithBadId_ReturnsNull()
-        // {
-        //     UserRepository sut = new();
+        [TestMethod]
+        public void GetItem_WithBadId_ReturnsNull()
+        {
+            UserRepository sut = new();
 
-        //     User? user = sut.GetItem(-1);
+            User? user = sut.GetItem(-1);
 
-        //     Assert.IsNull(user);
-        // }
+            Assert.IsNull(user);
+        }
 
-        // [TestMethod]
-        // public void GetItem_WithValidId_ReturnsUser()
-        // {
-        //     UserRepository sut = new();
-        //     sut.Create(new() 
-        //     { 
-        //         Id = 42,
-        //         FirstName = "First",
-        //         LastName = "Last"
-        //     });
+        [TestMethod]
+        public void GetItem_WithValidId_ReturnsUser()
+        {
+            UserRepository sut = new();
 
-        //     User? user = sut.GetItem(42);
+            User newUser = new(){
+                Id = 42, 
+                FirstName = "First",
+                LastName = "Last"
+            };
+            //clearing data base to avoid conflicts.
+            sut.Remove(newUser.Id);
+            sut.Create(newUser);
+            
+            User? user = sut.GetItem(42);
 
-        //     Assert.AreEqual(42, user?.Id);
-        //     Assert.AreEqual("First", user!.FirstName);
-        //     Assert.AreEqual("Last", user.LastName);
-        // }
+            Assert.AreEqual(42, user?.Id);
+            Assert.AreEqual("First", user!.FirstName);
+            Assert.AreEqual("Last", user.LastName);
+        }
 
-        // [TestMethod]
-        // public void List_WithUsers_ReturnsAllUser()
-        // {
-        //     UserRepository sut = new();
-        //     sut.Create(new()
-        //     {
-        //         Id = 42,
-        //         FirstName = "First",
-        //         LastName = "Last"
-        //     });
+        //declare that it is a test method. Once declared we can pass in params using datarow. 
+        [TestMethod]
+        [DataRow(-1, false)]
+        [DataRow(42, true)]
+        public void Remove_WithInvalidId_ReturnsTrue(int id, bool expected)
+        {
+            UserRepository sut = new();
+            User newUser = new(){
+                Id = 42, 
+                FirstName = "First",
+                LastName = "Last"
+            };
+            //clearing data base to avoid conflicts.
+            sut.Remove(newUser.Id);
+            sut.Create(newUser);  
 
-        //     ICollection<User> users = sut.List();
+            Assert.AreEqual(expected, sut.Remove(id));
+        }
 
-        //     Assert.AreEqual(MockData.Users.Count, users.Count);
-        //     foreach(var mockUser in MockData.Users.Values)
-        //     {
-        //         Assert.IsNotNull(users.SingleOrDefault(x => x.FirstName == mockUser.FirstName && x.LastName == mockUser.LastName));
-        //     }
-        // }
-        // //declare that it is a test method. Once declared we can pass in params using datarow. 
-        // [TestMethod]
-        // [DataRow(-1, false)]
-        // [DataRow(42, true)]
-        // public void Remove_WithInvalidId_ReturnsTrue(int id, bool expected)
-        // {
-        //     UserRepository sut = new();
-        //     sut.Create(new()
-        //     {
-        //         Id = 42,
-        //         FirstName = "First",
-        //         LastName = "Last"
-        //     });
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void Save_NullItem_ThrowsArgumentException()
+        {
+            UserRepository sut = new();
 
-        //     Assert.AreEqual(expected, sut.Remove(id));
-        // }
+            sut.Save(null!);
+        }
 
-        // [TestMethod]
-        // [ExpectedException(typeof(ArgumentNullException))]
-        // public void Save_NullItem_ThrowsArgumentException()
-        // {
-        //     UserRepository sut = new();
+        [TestMethod]
+        [DataRow(21)]
+        public void Save_WithValidItem_SavesItem(int id)
+        {
+            UserRepository sut = new();
 
-        //     sut.Save(null!);
-        // }
+            User newUser = new(){
+                Id = id, 
+                FirstName = "First",
+                LastName = "Last"
+            };
+            //clearing data base to avoid conflicts.
+            sut.Remove(newUser.Id);
+            sut.Create(newUser);  
+            sut.Save(newUser);
 
-        // [TestMethod]
-        // public void Save_WithValidItem_SavesItem()
-        // {
-        //     UserRepository sut = new();
-
-        //     sut.Save(new User() { Id = 42 });
-
-        //     Assert.AreEqual(42, sut.GetItem(42)?.Id);
-        // }
+            Assert.IsNotNull(sut.GetItem(id));
+            Assert.AreNotEqual(42, sut.GetItem(id)?.Id);
+            Assert.AreEqual(id, sut.GetItem(id)?.Id);
+        }
     }
 }
