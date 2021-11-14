@@ -11,7 +11,17 @@ jobs:
     defaults:
       run:
         working-directory: ./SecretSanta/
+    runs-on: ubuntu-latest
 
+    steps:
+    # checkout the repo
+    - uses: actions/checkout@v2
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 5.0.x
+
+    #Getting started with Web Build#
     - name: Get Directory
       run: pwd
       
@@ -43,8 +53,7 @@ jobs:
       working-directory: ./SecretSanta/test/SecretSanta.E2E.Tests/
       run: dotnet test --no-build --verbosity normal
 
-    ###API###
-
+    #API#
     - name: Restore dependencies API
       working-directory: ./SecretSanta/src/SecretSanta.Api/
       run: dotnet restore
@@ -65,7 +74,7 @@ jobs:
       working-directory: ./SecretSanta/test/SecretSanta.Api.Tests/
       run: dotnet test --no-build --verbosity normal
       
-    ###DATA###
+    #DATA#
     - name: Build DATA Tests
       working-directory: ./SecretSanta/test/SecretSanta.Data.Tests/
       run: dotnet build --no-restore 
@@ -74,7 +83,7 @@ jobs:
       working-directory: ./SecretSanta/test/SecretSanta.Data.Tests/
       run: dotnet test --no-build --verbosity normal
       
-    ###BUSINESS###
+    #BUSINESS#
     - name: Build DATA Tests
       working-directory: ./SecretSanta/test/SecretSanta.Business.Tests/
       run: dotnet build --no-restore 
@@ -82,4 +91,12 @@ jobs:
     - name: Test Data
       working-directory: ./SecretSanta/test/SecretSanta.Business.Tests/
       run: dotnet test --no-build --verbosity normal
-    
+
+      - name: Deploy to Azure Web App
+        id: deploy-to-webapp
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: 'LGarcia-SecretSanta'
+          slot-name: 'Production'
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_7197B88009CE4C1A81399CBBE844B739 }}
+          package: . 
