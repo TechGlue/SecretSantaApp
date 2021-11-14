@@ -212,17 +212,6 @@ export function createOrUpdateGroup() {
             }
             await this.loadGroup();
         },
-        async ChangeTimeTo12hr(currentGroupdId:number)
-        {
-           try{
-            var client = new GroupsClient(apiHost);
-            await client.changeTimeFormat(currentGroupdId);
-           } catch(error)
-           {
-               console.log(error);
-           }
-           await this.loadGroup();
-        },
         getAssignment(user:User) :string
         {
             var receiver: string = "Not assigned";
