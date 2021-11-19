@@ -65,23 +65,19 @@ jobs:
       run: dotnet test --no-build --verbosity normal
       
     #DATA#
-    - name: Build DATA Tests
-      working-directory: ./SecretSanta/test/SecretSanta.Data.Tests/
-      run: dotnet build --no-restore 
+    
+    - name: Build Data
+      working-directory: ./SecretSanta/src/SecretSanta.Business/
+      run: dotnet build --no-restore
+      
+    - name: Restore dependencies API Test
+      working-directory: ./SecretSanta/test/SecretSanta.Business.Tests/
+      run: dotnet restore
 
-    - name: Test Data
-      working-directory: ./SecretSanta/test/SecretSanta.Data.Tests/
+    - name: Test Data 
+      working-directory: ./SecretSanta/test/SecretSanta.Business.Tests/
       run: dotnet test --no-build --verbosity normal
       
-    #BUSINESS#
-    - name: Build DATA Tests
-      working-directory: ./SecretSanta/test/SecretSanta.Business.Tests/
-      run: dotnet build --no-restore 
-
-    - name: Test Data
-      working-directory: ./SecretSanta/test/SecretSanta.Business.Tests/
-      run: dotnet test --no-build --verbosity normal
-
     - name: Deploy to Azure Web App
       uses: azure/webapps-deploy@v2
       with:
