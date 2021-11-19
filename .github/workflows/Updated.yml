@@ -39,21 +39,21 @@ jobs:
       working-directory: ./SecretSanta/src/SecretSanta.Web/
       run: dotnet restore
 
-    - name: Restore dependencies E2E Test
-      working-directory: ./SecretSanta/test/SecretSanta.E2E.Tests/
-      run: dotnet restore
+    # - name: Restore dependencies E2E Test
+    #   working-directory: ./SecretSanta/test/SecretSanta.E2E.Tests/
+    #   run: dotnet restore
 
-    - name: Build Web
-      working-directory: ./SecretSanta/src/SecretSanta.Web/
-      run: dotnet build --no-restore
+    # - name: Build Web
+    #   working-directory: ./SecretSanta/src/SecretSanta.Web/
+    #   run: dotnet build --no-restore
 
-    - name: Build E2E Tests
-      working-directory: ./SecretSanta/test/SecretSanta.E2E.Tests/
-      run: dotnet build --no-restore 
+    # - name: Build E2E Tests
+    #   working-directory: ./SecretSanta/test/SecretSanta.E2E.Tests/
+    #   run: dotnet build --no-restore 
 
-    - name: Test E2E Tests
-      working-directory: ./SecretSanta/test/SecretSanta.E2E.Tests/
-      run: dotnet test --no-build --verbosity normal
+    # - name: Test E2E Tests
+    #   working-directory: ./SecretSanta/test/SecretSanta.E2E.Tests/
+    #   run: dotnet test --no-build --verbosity normal
 
     #API#
     - name: Restore dependencies API
@@ -77,6 +77,19 @@ jobs:
       run: dotnet test --no-build --verbosity normal
       
     #BUSINESS#
+
+    - name: Restore dependencies Business
+      working-directory: ./SecretSanta/src/SecretSanta.Business/
+      run: dotnet restore
+
+    - name: Build Business
+      working-directory: ./SecretSanta/src/SecretSanta.Business/
+      run: dotnet build --no-restore
+
+    - name: Restore dependencies Business Tests
+      working-directory: ./SecretSanta/test/SecretSanta.Business.Tests/
+      run: dotnet restore
+
     - name: Build Business Tests
       working-directory: ./SecretSanta/test/SecretSanta.Business.Tests/
       run: dotnet build --no-restore 
@@ -84,7 +97,8 @@ jobs:
     - name: Test Business
       working-directory: ./SecretSanta/test/SecretSanta.Business.Tests/
       run: dotnet test --no-build --verbosity normal
-
+    
+    #Deployment#
     - name: Deploy to Azure Web App
       uses: azure/webapps-deploy@v2
       with:
