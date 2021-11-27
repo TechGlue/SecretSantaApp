@@ -14,7 +14,6 @@ module.exports = (env, argv) => {
 
     // paths
     const distPath = path.resolve(__dirname, './wwwroot');
-    const imgDistPath = path.resolve(distPath, './img');
     const srcPath = '.';
     const templatePath = path.resolve(__dirname, './Views/Shared');
 
@@ -72,12 +71,21 @@ module.exports = (env, argv) => {
                     }
                 },
                 {
-                    test: /\.(png|jpg|gif|svg)$/,
-                    loader: 'file-loader',
+                    test: /\.(png|svg|jpg|jpeg|gif)$/i,
+                    loader: 'url-loader',
                     options: {
-                        name: '[name].[ext]?[hash]'
-                    }
-                }
+                        limit: 8192,
+                    },
+                    type: 'asset/resource',
+                },
+                //{
+                    // test: /\.(png|jpg|gif|svg)$/,
+                    // loader: 'file-loader',
+                    // options: {
+                        // name: '[name].[ext]?[hash]'
+                    // }
+                // }
+                
             ]
         },
         plugins: [
