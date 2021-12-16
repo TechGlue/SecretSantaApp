@@ -1011,7 +1011,7 @@ export interface IProblemDetails {
 export class UpdateGroup implements IUpdateGroup {
     name?: string | undefined;
     date?: string | undefined;
-    locations?: string | undefined;
+    location?: string | undefined;
 
     constructor(data?: IUpdateGroup) {
         if (data) {
@@ -1026,7 +1026,7 @@ export class UpdateGroup implements IUpdateGroup {
         if (_data) {
             this.name = _data["name"];
             this.date = _data["date"];
-            this.locations = _data["locations"];
+            this.location = _data["location"];
         }
     }
 
@@ -1041,7 +1041,7 @@ export class UpdateGroup implements IUpdateGroup {
         data = typeof data === 'object' ? data : {};
         data["name"] = this.name;
         data["date"] = this.date;
-        data["locations"] = this.locations;
+        data["location"] = this.location;
         return data; 
     }
 }
@@ -1049,7 +1049,7 @@ export class UpdateGroup implements IUpdateGroup {
 export interface IUpdateGroup {
     name?: string | undefined;
     date?: string | undefined;
-    locations?: string | undefined;
+    location?: string | undefined;
 }
 
 export class UpdateUser implements IUpdateUser {
