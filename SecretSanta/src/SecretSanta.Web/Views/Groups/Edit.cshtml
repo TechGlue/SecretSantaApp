@@ -38,24 +38,6 @@
     <div class="mb-6" x-show="isEditing">
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-                <label class="text-gray-500 font-bold text-right" for="Name">Time</label>
-                <input class="w-full border-b-2 border-baby-blue-lighter focus:border-baby-blue-dark focus:ring-transparent focus:outline-none" type="time" id="Time" name="Time" x-model="group.time"/>
-                <button class="mt-2 border-2 bg-baby-blue-lighter border-baby-blue-dark hover:bg-baby-blue-dark py-2 px-4 rounded-xl mr-3" @@click="update()">Update</button>
-            </div>
-        </div>
-    </div>
-    <div class="mb-6" x-show="isEditing == false">
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div>
-                <label class="text-gray-500 font-bold text-right" for="Name">Time:</label>
-                <span x-text="group.time"></span>
-                <button class="border-2 bg-baby-blue-lighter hover:bg-baby-blue-dark py-2 px-4 rounded-xl mr-3" @@click="edit()">Edit</button>
-            </div>
-        </div>
-    </div>
-    <div class="mb-6" x-show="isEditing">
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div>
                 <label class="text-gray-500 font-bold text-right" for="Name">Location</label>
                 <input class="w-full border-b-2 border-baby-blue-lighter focus:border-baby-blue-dark focus:ring-transparent focus:outline-none" type="text" id="Location" name="Location" x-model="group.location"/>
                 <button class="mt-2 border-2 bg-baby-blue-lighter border-baby-blue-dark hover:bg-baby-blue-dark py-2 px-4 rounded-xl mr-3" @@click="update()">Update</button>

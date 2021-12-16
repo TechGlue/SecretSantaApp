@@ -70,7 +70,6 @@ namespace SecretSanta.Api.Controllers
             {
                 foundGroup.Name = group?.Name ?? "";
                 foundGroup.Date = group?.Date ?? "";
-                foundGroup.Time = group?.Time ?? "";
                 foundGroup.Location = group?.Locations ?? "";
 
                 GroupRepository.Save(foundGroup);
@@ -131,6 +130,5 @@ namespace SecretSanta.Api.Controllers
             }
             return Ok();
         }
-        
     }
 }

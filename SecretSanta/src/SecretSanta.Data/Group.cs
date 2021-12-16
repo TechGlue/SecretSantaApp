@@ -14,9 +14,6 @@ namespace SecretSanta.Data
         public string Date { get; set; } = "";
 
         [Required]
-        public string Time { get; set; } = "";
-
-        [Required]
         public string Location { get; set; } = "";
 
         public List<User>? Users { get; set; } = new();

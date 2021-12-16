@@ -9,8 +9,6 @@ namespace SecretSanta.Api.Dto
         
         public string? Date { get; set; }
 
-        public string? Time { get; set; }
-
         public string? Location { get; set; }
 
         public List<User> Users { get; } = new();
@@ -24,7 +22,6 @@ namespace SecretSanta.Api.Dto
                 Id = group.Id,
                 Name = group.Name,
                 Date = group.Date,
-                Time = group.Time,
                 Location = group.Location
             };
             if (includeChildObjects)
@@ -55,7 +52,6 @@ namespace SecretSanta.Api.Dto
                 Id = group.Id,
                 Name = group.Name ?? "",
                 Date = group.Date ?? "",
-                Time = group.Time ?? "",
                 Location = group.Location ?? ""
             };
         }
