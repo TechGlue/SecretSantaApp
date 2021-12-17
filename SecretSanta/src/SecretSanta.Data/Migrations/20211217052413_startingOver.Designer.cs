@@ -9,8 +9,8 @@ using SecretSanta.Data;
 namespace SecretSanta.Data.Migrations
 {
     [DbContext(typeof(SecretSantaContext))]
-    [Migration("20211107094746_restartedMigrations")]
-    partial class restartedMigrations
+    [Migration("20211217052413_startingOver")]
+    partial class startingOver
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -77,10 +77,6 @@ namespace SecretSanta.Data.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Time")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
                     b.HasKey("Id");
 
                     b.ToTable("Groups");
@@ -91,16 +87,14 @@ namespace SecretSanta.Data.Migrations
                             Id = 1,
                             Date = "",
                             Location = "",
-                            Name = "Pedro's pizza",
-                            Time = ""
+                            Name = "Pedro's pizza"
                         },
                         new
                         {
                             Id = 2,
                             Date = "",
                             Location = "",
-                            Name = "Pedro's Diner",
-                            Time = ""
+                            Name = "Pedro's Diner"
                         });
                 });
 

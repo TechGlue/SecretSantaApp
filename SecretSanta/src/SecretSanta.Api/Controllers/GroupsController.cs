@@ -50,13 +50,12 @@ namespace SecretSanta.Api.Controllers
         [ProducesResponseType(typeof(Dto.Group), (int)HttpStatusCode.OK)]
         public ActionResult<Dto.Group?> Post([FromBody] Dto.Group group)
         {
-
             bool groupExists = GroupRepository.GetItem(group.Id) is not null;
 
             if(groupExists)
                 return Conflict("Group exists. ");
 
-                return Dto.Group.ToDto(GroupRepository.Create(Dto.Group.FromDto(group)!));
+            return Dto.Group.ToDto(GroupRepository.Create(Dto.Group.FromDto(group)!));
         }
 
         [HttpPut("{id}")]
@@ -70,8 +69,7 @@ namespace SecretSanta.Api.Controllers
             {
                 foundGroup.Name = group?.Name ?? "";
                 foundGroup.Date = group?.Date ?? "";
-                foundGroup.Time = group?.Time ?? "";
-                foundGroup.Location = group?.Locations ?? "";
+                foundGroup.Location = group?.Location ?? "";
 
                 GroupRepository.Save(foundGroup);
                 return Ok();
@@ -131,6 +129,5 @@ namespace SecretSanta.Api.Controllers
             }
             return Ok();
         }
-        
     }
 }

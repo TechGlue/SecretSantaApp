@@ -2,7 +2,7 @@
 
 namespace SecretSanta.Data.Migrations
 {
-    public partial class restartedMigrations : Migration
+    public partial class startingOver : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -14,7 +14,6 @@ namespace SecretSanta.Data.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     Name = table.Column<string>(type: "TEXT", nullable: false),
                     Date = table.Column<string>(type: "TEXT", nullable: false),
-                    Time = table.Column<string>(type: "TEXT", nullable: false),
                     Location = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
@@ -96,13 +95,13 @@ namespace SecretSanta.Data.Migrations
 
             migrationBuilder.InsertData(
                 table: "Groups",
-                columns: new[] { "Id", "Date", "Location", "Name", "Time" },
-                values: new object[] { 1, "", "", "Pedro's pizza", "" });
+                columns: new[] { "Id", "Date", "Location", "Name" },
+                values: new object[] { 1, "", "", "Pedro's pizza" });
 
             migrationBuilder.InsertData(
                 table: "Groups",
-                columns: new[] { "Id", "Date", "Location", "Name", "Time" },
-                values: new object[] { 2, "", "", "Pedro's Diner", "" });
+                columns: new[] { "Id", "Date", "Location", "Name" },
+                values: new object[] { 2, "", "", "Pedro's Diner" });
 
             migrationBuilder.InsertData(
                 table: "Users",

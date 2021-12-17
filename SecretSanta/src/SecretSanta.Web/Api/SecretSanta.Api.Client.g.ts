@@ -780,7 +780,6 @@ export class Group implements IGroup {
     id!: number;
     name?: string | undefined;
     date?: string | undefined;
-    time?: string | undefined;
     location?: string | undefined;
     users!: User[];
     assignments!: Assignment[];
@@ -803,7 +802,6 @@ export class Group implements IGroup {
             this.id = _data["id"];
             this.name = _data["name"];
             this.date = _data["date"];
-            this.time = _data["time"];
             this.location = _data["location"];
             if (Array.isArray(_data["users"])) {
                 this.users = [] as any;
@@ -830,7 +828,6 @@ export class Group implements IGroup {
         data["id"] = this.id;
         data["name"] = this.name;
         data["date"] = this.date;
-        data["time"] = this.time;
         data["location"] = this.location;
         if (Array.isArray(this.users)) {
             data["users"] = [];
@@ -850,7 +847,6 @@ export interface IGroup {
     id: number;
     name?: string | undefined;
     date?: string | undefined;
-    time?: string | undefined;
     location?: string | undefined;
     users: User[];
     assignments: Assignment[];
@@ -1015,8 +1011,7 @@ export interface IProblemDetails {
 export class UpdateGroup implements IUpdateGroup {
     name?: string | undefined;
     date?: string | undefined;
-    time?: string | undefined;
-    locations?: string | undefined;
+    location?: string | undefined;
 
     constructor(data?: IUpdateGroup) {
         if (data) {
@@ -1031,8 +1026,7 @@ export class UpdateGroup implements IUpdateGroup {
         if (_data) {
             this.name = _data["name"];
             this.date = _data["date"];
-            this.time = _data["time"];
-            this.locations = _data["locations"];
+            this.location = _data["location"];
         }
     }
 
@@ -1047,8 +1041,7 @@ export class UpdateGroup implements IUpdateGroup {
         data = typeof data === 'object' ? data : {};
         data["name"] = this.name;
         data["date"] = this.date;
-        data["time"] = this.time;
-        data["locations"] = this.locations;
+        data["location"] = this.location;
         return data; 
     }
 }
@@ -1056,8 +1049,7 @@ export class UpdateGroup implements IUpdateGroup {
 export interface IUpdateGroup {
     name?: string | undefined;
     date?: string | undefined;
-    time?: string | undefined;
-    locations?: string | undefined;
+    location?: string | undefined;
 }
 
 export class UpdateUser implements IUpdateUser {
