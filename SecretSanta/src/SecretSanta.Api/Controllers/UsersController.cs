@@ -53,7 +53,7 @@ namespace SecretSanta.Api.Controllers
             if(userExists)
                 return Conflict("User exists. ");
 
-                return Dto.User.ToDto(Repository.Create(Dto.User.FromDto(user)!));
+            return Dto.User.ToDto(Repository.Create(Dto.User.FromDto(user)!));
 
         }
 
