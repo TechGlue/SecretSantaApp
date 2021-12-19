@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SecretSanta.Data;
 
 namespace SecretSanta.Data.Migrations
 {
     [DbContext(typeof(SecretSantaContext))]
-    partial class SecretSantaContextModelSnapshot : ModelSnapshot
+    [Migration("20211219044838_gifts")]
+    partial class gifts
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -59,7 +61,7 @@ namespace SecretSanta.Data.Migrations
 
             modelBuilder.Entity("SecretSanta.Data.Gift", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
@@ -69,7 +71,7 @@ namespace SecretSanta.Data.Migrations
                     b.Property<int>("Priority")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("ReceiverId")
+                    b.Property<int?>("ReceiverId")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Title")
@@ -79,7 +81,7 @@ namespace SecretSanta.Data.Migrations
                     b.Property<string>("Url")
                         .HasColumnType("TEXT");
 
-                    b.HasKey("Id");
+                    b.HasKey("ID");
 
                     b.HasIndex("ReceiverId");
 
@@ -212,10 +214,8 @@ namespace SecretSanta.Data.Migrations
             modelBuilder.Entity("SecretSanta.Data.Gift", b =>
                 {
                     b.HasOne("SecretSanta.Data.User", "Receiver")
-                        .WithMany("Gifts")
-                        .HasForeignKey("ReceiverId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithMany()
+                        .HasForeignKey("ReceiverId");
 
                     b.Navigation("Receiver");
                 });
@@ -223,11 +223,6 @@ namespace SecretSanta.Data.Migrations
             modelBuilder.Entity("SecretSanta.Data.Group", b =>
                 {
                     b.Navigation("Assignments");
-                });
-
-            modelBuilder.Entity("SecretSanta.Data.User", b =>
-                {
-                    b.Navigation("Gifts");
                 });
 #pragma warning restore 612, 618
         }

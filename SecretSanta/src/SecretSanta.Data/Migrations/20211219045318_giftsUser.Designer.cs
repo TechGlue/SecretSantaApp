@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SecretSanta.Data;
 
 namespace SecretSanta.Data.Migrations
 {
     [DbContext(typeof(SecretSantaContext))]
-    partial class SecretSantaContextModelSnapshot : ModelSnapshot
+    [Migration("20211219045318_giftsUser")]
+    partial class giftsUser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -59,7 +61,7 @@ namespace SecretSanta.Data.Migrations
 
             modelBuilder.Entity("SecretSanta.Data.Gift", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
@@ -79,7 +81,7 @@ namespace SecretSanta.Data.Migrations
                     b.Property<string>("Url")
                         .HasColumnType("TEXT");
 
-                    b.HasKey("Id");
+                    b.HasKey("ID");
 
                     b.HasIndex("ReceiverId");
 
