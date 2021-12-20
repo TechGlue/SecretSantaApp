@@ -22,5 +22,14 @@ namespace SecretSanta.Data
                 new Group() {Id = 1, Name = "Pedro's pizza"}, new Group() {Id = 2, Name = "Pedro's Diner"},
             };
         }
+
+        // public static List<Gift> Gifts()
+        // {
+        //     return new List<Gift>()
+        //     {
+        //         new Gift(){Id = 1, Title ="your mom", Description = "my mom", Url = "", Priority = 1}, 
+        //         new Gift(){Id = 2, Title ="your mom", Description = "my mom", Url = "", Priority = 1}
+        //     };
+        // }
     }
 }

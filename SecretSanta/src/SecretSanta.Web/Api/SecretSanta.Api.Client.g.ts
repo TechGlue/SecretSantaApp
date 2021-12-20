@@ -9,6 +9,245 @@
 
 import axios, { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse, CancelToken } from 'axios';
 
+export interface IGiftsClient {
+    get(id: number): Promise<Gift>;
+    delete(id: number): Promise<void>;
+    put(id: number, gift: UpdateGift): Promise<void>;
+    post(gift: Gift): Promise<Gift>;
+}
+
+export class GiftsClient implements IGiftsClient {
+    private instance: AxiosInstance;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(baseUrl?: string, instance?: AxiosInstance) {
+        this.instance = instance ? instance : axios.create();
+        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
+    }
+
+    get(id: number , cancelToken?: CancelToken | undefined): Promise<Gift> {
+        let url_ = this.baseUrl + "/api/Gifts/{id}";
+        if (id === undefined || id === null)
+            throw new Error("The parameter 'id' must be defined.");
+        url_ = url_.replace("{id}", encodeURIComponent("" + id));
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ = <AxiosRequestConfig>{
+            method: "GET",
+            url: url_,
+            headers: {
+                "Accept": "application/json"
+            },
+            cancelToken
+        };
+
+        return this.instance.request(options_).catch((_error: any) => {
+            if (isAxiosError(_error) && _error.response) {
+                return _error.response;
+            } else {
+                throw _error;
+            }
+        }).then((_response: AxiosResponse) => {
+            return this.processGet(_response);
+        });
+    }
+
+    protected processGet(response: AxiosResponse): Promise<Gift> {
+        const status = response.status;
+        let _headers: any = {};
+        if (response.headers && typeof response.headers === "object") {
+            for (let k in response.headers) {
+                if (response.headers.hasOwnProperty(k)) {
+                    _headers[k] = response.headers[k];
+                }
+            }
+        }
+        if (status === 200) {
+            const _responseText = response.data;
+            let result200: any = null;
+            let resultData200  = _responseText;
+            result200 = Gift.fromJS(resultData200);
+            return result200;
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.data;
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Promise.resolve<Gift>(<any>null);
+    }
+
+    delete(id: number , cancelToken?: CancelToken | undefined): Promise<void> {
+        let url_ = this.baseUrl + "/api/Gifts/{id}";
+        if (id === undefined || id === null)
+            throw new Error("The parameter 'id' must be defined.");
+        url_ = url_.replace("{id}", encodeURIComponent("" + id));
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ = <AxiosRequestConfig>{
+            method: "DELETE",
+            url: url_,
+            headers: {
+            },
+            cancelToken
+        };
+
+        return this.instance.request(options_).catch((_error: any) => {
+            if (isAxiosError(_error) && _error.response) {
+                return _error.response;
+            } else {
+                throw _error;
+            }
+        }).then((_response: AxiosResponse) => {
+            return this.processDelete(_response);
+        });
+    }
+
+    protected processDelete(response: AxiosResponse): Promise<void> {
+        const status = response.status;
+        let _headers: any = {};
+        if (response.headers && typeof response.headers === "object") {
+            for (let k in response.headers) {
+                if (response.headers.hasOwnProperty(k)) {
+                    _headers[k] = response.headers[k];
+                }
+            }
+        }
+        if (status === 404) {
+            const _responseText = response.data;
+            let result404: any = null;
+            let resultData404  = _responseText;
+            result404 = ProblemDetails.fromJS(resultData404);
+            return throwException("A server side error occurred.", status, _responseText, _headers, result404);
+        } else if (status === 200) {
+            const _responseText = response.data;
+            return Promise.resolve<void>(<any>null);
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.data;
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Promise.resolve<void>(<any>null);
+    }
+
+    put(id: number, gift: UpdateGift , cancelToken?: CancelToken | undefined): Promise<void> {
+        let url_ = this.baseUrl + "/api/Gifts/{id}";
+        if (id === undefined || id === null)
+            throw new Error("The parameter 'id' must be defined.");
+        url_ = url_.replace("{id}", encodeURIComponent("" + id));
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(gift);
+
+        let options_ = <AxiosRequestConfig>{
+            data: content_,
+            method: "PUT",
+            url: url_,
+            headers: {
+                "Content-Type": "application/json",
+            },
+            cancelToken
+        };
+
+        return this.instance.request(options_).catch((_error: any) => {
+            if (isAxiosError(_error) && _error.response) {
+                return _error.response;
+            } else {
+                throw _error;
+            }
+        }).then((_response: AxiosResponse) => {
+            return this.processPut(_response);
+        });
+    }
+
+    protected processPut(response: AxiosResponse): Promise<void> {
+        const status = response.status;
+        let _headers: any = {};
+        if (response.headers && typeof response.headers === "object") {
+            for (let k in response.headers) {
+                if (response.headers.hasOwnProperty(k)) {
+                    _headers[k] = response.headers[k];
+                }
+            }
+        }
+        if (status === 400) {
+            const _responseText = response.data;
+            let result400: any = null;
+            let resultData400  = _responseText;
+            result400 = ProblemDetails.fromJS(resultData400);
+            return throwException("A server side error occurred.", status, _responseText, _headers, result400);
+        } else if (status === 404) {
+            const _responseText = response.data;
+            let result404: any = null;
+            let resultData404  = _responseText;
+            result404 = ProblemDetails.fromJS(resultData404);
+            return throwException("A server side error occurred.", status, _responseText, _headers, result404);
+        } else if (status === 200) {
+            const _responseText = response.data;
+            return Promise.resolve<void>(<any>null);
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.data;
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Promise.resolve<void>(<any>null);
+    }
+
+    post(gift: Gift , cancelToken?: CancelToken | undefined): Promise<Gift> {
+        let url_ = this.baseUrl + "/api/Gifts";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(gift);
+
+        let options_ = <AxiosRequestConfig>{
+            data: content_,
+            method: "POST",
+            url: url_,
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            },
+            cancelToken
+        };
+
+        return this.instance.request(options_).catch((_error: any) => {
+            if (isAxiosError(_error) && _error.response) {
+                return _error.response;
+            } else {
+                throw _error;
+            }
+        }).then((_response: AxiosResponse) => {
+            return this.processPost(_response);
+        });
+    }
+
+    protected processPost(response: AxiosResponse): Promise<Gift> {
+        const status = response.status;
+        let _headers: any = {};
+        if (response.headers && typeof response.headers === "object") {
+            for (let k in response.headers) {
+                if (response.headers.hasOwnProperty(k)) {
+                    _headers[k] = response.headers[k];
+                }
+            }
+        }
+        if (status === 400) {
+            const _responseText = response.data;
+            let result400: any = null;
+            let resultData400  = _responseText;
+            result400 = ProblemDetails.fromJS(resultData400);
+            return throwException("A server side error occurred.", status, _responseText, _headers, result400);
+        } else if (status === 200) {
+            const _responseText = response.data;
+            let result200: any = null;
+            let resultData200  = _responseText;
+            result200 = Gift.fromJS(resultData200);
+            return result200;
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.data;
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Promise.resolve<Gift>(<any>null);
+    }
+}
+
 export interface IGroupsClient {
     getAll(): Promise<Group[]>;
     post(group: Group): Promise<Group>;
@@ -776,6 +1015,226 @@ export class UsersClient implements IUsersClient {
     }
 }
 
+export class Gift implements IGift {
+    id!: number;
+    title?: string | undefined;
+    description?: string | undefined;
+    url?: string | undefined;
+    priority!: number;
+    receiver?: User | undefined;
+
+    constructor(data?: IGift) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.title = _data["title"];
+            this.description = _data["description"];
+            this.url = _data["url"];
+            this.priority = _data["priority"];
+            this.receiver = _data["receiver"] ? User.fromJS(_data["receiver"]) : <any>undefined;
+        }
+    }
+
+    static fromJS(data: any): Gift {
+        data = typeof data === 'object' ? data : {};
+        let result = new Gift();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["title"] = this.title;
+        data["description"] = this.description;
+        data["url"] = this.url;
+        data["priority"] = this.priority;
+        data["receiver"] = this.receiver ? this.receiver.toJSON() : <any>undefined;
+        return data; 
+    }
+}
+
+export interface IGift {
+    id: number;
+    title?: string | undefined;
+    description?: string | undefined;
+    url?: string | undefined;
+    priority: number;
+    receiver?: User | undefined;
+}
+
+export class User implements IUser {
+    id!: number;
+    firstName?: string | undefined;
+    lastName?: string | undefined;
+    email?: string | undefined;
+
+    constructor(data?: IUser) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.firstName = _data["firstName"];
+            this.lastName = _data["lastName"];
+            this.email = _data["email"];
+        }
+    }
+
+    static fromJS(data: any): User {
+        data = typeof data === 'object' ? data : {};
+        let result = new User();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["firstName"] = this.firstName;
+        data["lastName"] = this.lastName;
+        data["email"] = this.email;
+        return data; 
+    }
+}
+
+export interface IUser {
+    id: number;
+    firstName?: string | undefined;
+    lastName?: string | undefined;
+    email?: string | undefined;
+}
+
+export class ProblemDetails implements IProblemDetails {
+    type?: string | undefined;
+    title?: string | undefined;
+    status?: number | undefined;
+    detail?: string | undefined;
+    instance?: string | undefined;
+    extensions?: { [key: string]: any; } | undefined;
+
+    constructor(data?: IProblemDetails) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.type = _data["type"];
+            this.title = _data["title"];
+            this.status = _data["status"];
+            this.detail = _data["detail"];
+            this.instance = _data["instance"];
+            if (_data["extensions"]) {
+                this.extensions = {} as any;
+                for (let key in _data["extensions"]) {
+                    if (_data["extensions"].hasOwnProperty(key))
+                        (<any>this.extensions)![key] = _data["extensions"][key];
+                }
+            }
+        }
+    }
+
+    static fromJS(data: any): ProblemDetails {
+        data = typeof data === 'object' ? data : {};
+        let result = new ProblemDetails();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["type"] = this.type;
+        data["title"] = this.title;
+        data["status"] = this.status;
+        data["detail"] = this.detail;
+        data["instance"] = this.instance;
+        if (this.extensions) {
+            data["extensions"] = {};
+            for (let key in this.extensions) {
+                if (this.extensions.hasOwnProperty(key))
+                    (<any>data["extensions"])[key] = this.extensions[key];
+            }
+        }
+        return data; 
+    }
+}
+
+export interface IProblemDetails {
+    type?: string | undefined;
+    title?: string | undefined;
+    status?: number | undefined;
+    detail?: string | undefined;
+    instance?: string | undefined;
+    extensions?: { [key: string]: any; } | undefined;
+}
+
+export class UpdateGift implements IUpdateGift {
+    title?: string | undefined;
+    description?: string | undefined;
+    url?: string | undefined;
+    priority!: number;
+
+    constructor(data?: IUpdateGift) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.title = _data["title"];
+            this.description = _data["description"];
+            this.url = _data["url"];
+            this.priority = _data["priority"];
+        }
+    }
+
+    static fromJS(data: any): UpdateGift {
+        data = typeof data === 'object' ? data : {};
+        let result = new UpdateGift();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["title"] = this.title;
+        data["description"] = this.description;
+        data["url"] = this.url;
+        data["priority"] = this.priority;
+        return data; 
+    }
+}
+
+export interface IUpdateGift {
+    title?: string | undefined;
+    description?: string | undefined;
+    url?: string | undefined;
+    priority: number;
+}
+
 export class Group implements IGroup {
     id!: number;
     name?: string | undefined;
@@ -852,54 +1311,6 @@ export interface IGroup {
     assignments: Assignment[];
 }
 
-export class User implements IUser {
-    id!: number;
-    firstName?: string | undefined;
-    lastName?: string | undefined;
-    email?: string | undefined;
-
-    constructor(data?: IUser) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.id = _data["id"];
-            this.firstName = _data["firstName"];
-            this.lastName = _data["lastName"];
-            this.email = _data["email"];
-        }
-    }
-
-    static fromJS(data: any): User {
-        data = typeof data === 'object' ? data : {};
-        let result = new User();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["id"] = this.id;
-        data["firstName"] = this.firstName;
-        data["lastName"] = this.lastName;
-        data["email"] = this.email;
-        return data; 
-    }
-}
-
-export interface IUser {
-    id: number;
-    firstName?: string | undefined;
-    lastName?: string | undefined;
-    email?: string | undefined;
-}
-
 export class Assignment implements IAssignment {
     giver?: User | undefined;
     receiver?: User | undefined;
@@ -938,74 +1349,6 @@ export class Assignment implements IAssignment {
 export interface IAssignment {
     giver?: User | undefined;
     receiver?: User | undefined;
-}
-
-export class ProblemDetails implements IProblemDetails {
-    type?: string | undefined;
-    title?: string | undefined;
-    status?: number | undefined;
-    detail?: string | undefined;
-    instance?: string | undefined;
-    extensions?: { [key: string]: any; } | undefined;
-
-    constructor(data?: IProblemDetails) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.type = _data["type"];
-            this.title = _data["title"];
-            this.status = _data["status"];
-            this.detail = _data["detail"];
-            this.instance = _data["instance"];
-            if (_data["extensions"]) {
-                this.extensions = {} as any;
-                for (let key in _data["extensions"]) {
-                    if (_data["extensions"].hasOwnProperty(key))
-                        (<any>this.extensions)![key] = _data["extensions"][key];
-                }
-            }
-        }
-    }
-
-    static fromJS(data: any): ProblemDetails {
-        data = typeof data === 'object' ? data : {};
-        let result = new ProblemDetails();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["type"] = this.type;
-        data["title"] = this.title;
-        data["status"] = this.status;
-        data["detail"] = this.detail;
-        data["instance"] = this.instance;
-        if (this.extensions) {
-            data["extensions"] = {};
-            for (let key in this.extensions) {
-                if (this.extensions.hasOwnProperty(key))
-                    (<any>data["extensions"])[key] = this.extensions[key];
-            }
-        }
-        return data; 
-    }
-}
-
-export interface IProblemDetails {
-    type?: string | undefined;
-    title?: string | undefined;
-    status?: number | undefined;
-    detail?: string | undefined;
-    instance?: string | undefined;
-    extensions?: { [key: string]: any; } | undefined;
 }
 
 export class UpdateGroup implements IUpdateGroup {

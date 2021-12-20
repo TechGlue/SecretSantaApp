@@ -1,3 +1,5 @@
+using System;
+
 namespace SecretSanta.Api.Dto
 {
     public class Gift
@@ -14,26 +16,28 @@ namespace SecretSanta.Api.Dto
 
         public static Gift? ToDto(Data.Gift? gift)
         {
-            if(gift is null) return null;
+            if (gift is null) return null;
             return new Gift
             {
-                Title = gift.Title,
                 Id = gift.Id,
+                Title = gift.Title,
                 Description = gift.Description,
                 Url = gift.Url,
                 Priority = gift.Priority,
+                Receiver = User.ToDto(gift.Receiver)
             };
         }
 
-        public static Data.User? FromDto(User? user)
+        public static Data.Gift? FromDto(Gift? gift)
         {
-            if (user is null) return null;
-            return new Data.User
+            if (gift is null) return null;
+            return new Data.Gift
             {
-                Id = user.Id,
-                FirstName = user.FirstName ?? "",
-                LastName = user.LastName ?? "",
-                Email = user.Email ?? ""
+                Id = gift.Id,
+                Title = gift.Title ?? "",
+                Description = gift.Description,
+                Url = gift.Url,
+                Priority = gift.Priority,
             };
         }
     }
