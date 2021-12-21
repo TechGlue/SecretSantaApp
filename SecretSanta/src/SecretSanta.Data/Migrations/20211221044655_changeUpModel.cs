@@ -2,7 +2,7 @@
 
 namespace SecretSanta.Data.Migrations
 {
-    public partial class RecreateGifts : Migration
+    public partial class changeUpModel : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

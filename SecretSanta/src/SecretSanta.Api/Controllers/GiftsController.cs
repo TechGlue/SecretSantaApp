@@ -50,13 +50,12 @@ namespace SecretSanta.Api.Controllers
             bool giftExists = Repository.GetItem(gift.Id) is not null;
 
             if(giftExists)
-                return Conflict("Gift exists. ");
+                return Conflict("Gift exists.");
 
             return Dto.Gift.ToDto(Repository.Create(Dto.Gift.FromDto(gift)!)); 
         }
 
         [HttpPut("{id}")]
-        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         public ActionResult Put(int id, [FromBody] Dto.UpdateGift? gift)

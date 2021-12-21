@@ -9,7 +9,6 @@ namespace SecretSanta.Business
     {
         private SecretSantaContext Context = new SecretSantaContext();
 
-
         public User Create(User item)
         {
             if (item is null)

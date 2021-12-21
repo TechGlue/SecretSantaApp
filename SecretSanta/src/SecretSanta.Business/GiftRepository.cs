@@ -28,7 +28,6 @@ namespace SecretSanta.Business
             return context.Gifts
                 .Where(gift => gift.Id == id)
                 .SingleOrDefault();
-
         }
 
         public ICollection<Gift> List()

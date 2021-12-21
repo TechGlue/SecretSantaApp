@@ -8,7 +8,7 @@ import { fas, faThList } from '@fortawesome/free-solid-svg-icons';
 import { far } from '@fortawesome/free-regular-svg-icons';
 import { fab } from '@fortawesome/free-brands-svg-icons';
 
-import { Group, GroupsClient, User, UsersClient } from '../Api/SecretSanta.Api.Client.g';
+import { Group, GroupsClient, User, UsersClient, Gift, GiftsClient } from '../Api/SecretSanta.Api.Client.g';
 
 library.add(fas, far, fab);
 dom.watch();
@@ -54,6 +54,29 @@ export function setupUsers() {
     }
 }
 
+export function setupGifts(){
+    return{
+        gifts: [] as Gift[],
+        async mounted(){
+            await this.loadGifts();
+        }, 
+        async deleteGift(currentGift: Gift){
+            if (confirm(`Are you sure you want to delete ${currentGift.title}`)) {
+                var client = new GiftsClient(apiHost);
+                await client.delete(currentGift.id);
+                await this.loadGifts();
+            }
+        }, 
+        async loadGifts(){
+            try{
+                var client = new GiftsClient(`${apiHost}`);
+                this.gifts = await client.getAll() || [];
+            } catch (error){
+                console.log(error);
+            }
+        }
+    }
+}
 export function createOrUpdateUser(){
     return{
         user: {} as User,

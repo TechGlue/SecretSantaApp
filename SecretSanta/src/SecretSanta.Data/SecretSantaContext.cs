@@ -28,7 +28,7 @@ namespace SecretSanta.Data
             }
             modelBuilder.Entity<User>().HasData((DbInitializer.Users()));
             modelBuilder.Entity<Group>().HasData(DbInitializer.Groups());
-            //modelBuilder.Entity<Gift>().HasData(DbInitializer.Gifts());
+            modelBuilder.Entity<Gift>().HasData(DbInitializer.Gifts());
         }
     }
 }
