@@ -8,7 +8,8 @@ namespace SecretSanta.Business
     public class UserRepository : IUserRepository
     {
         private SecretSantaContext Context = new SecretSantaContext();
-        
+
+
         public User Create(User item)
         {
             if (item is null)

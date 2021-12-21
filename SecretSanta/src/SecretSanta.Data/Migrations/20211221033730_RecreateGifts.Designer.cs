@@ -9,8 +9,8 @@ using SecretSanta.Data;
 namespace SecretSanta.Data.Migrations
 {
     [DbContext(typeof(SecretSantaContext))]
-    [Migration("20211219060528_giftsTypoId")]
-    partial class giftsTypoId
+    [Migration("20211221033730_RecreateGifts")]
+    partial class RecreateGifts
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

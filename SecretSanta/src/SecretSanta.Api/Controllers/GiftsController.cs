@@ -11,12 +11,16 @@ namespace SecretSanta.Api.Controllers
     public class GiftsController : ControllerBase
     {
         private IGiftRepository Repository { get; }
+        public GiftsController(IGiftRepository repository)
+        {
+            Repository = repository ?? throw new System.ArgumentNullException(nameof(repository));
+        }
 
-        // [HttpGet]
-        // public IEnumerable<Dto.Gift> Get()
-        // {
-        //     return Repository.List().Select(x => Dto.Gift.ToDto(x)!);
-        // }
+        [HttpGet]
+        public IEnumerable<Dto.Gift> Get()
+        {
+            return Repository.List().Select(x => Dto.Gift.ToDto(x)!);
+        }
 
         [HttpGet("{id}")]
         public ActionResult<Dto.Gift?> Get(int id)
@@ -64,6 +68,7 @@ namespace SecretSanta.Api.Controllers
                 foundGift.Description = gift?.Description ?? "";
                 foundGift.Url= gift?.Url ?? "";
                 foundGift.Priority = gift?.Priority ?? 0;
+                
                 Repository.Save(foundGift);
                 return Ok();
             }

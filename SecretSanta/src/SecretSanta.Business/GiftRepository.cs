@@ -15,13 +15,21 @@ namespace SecretSanta.Business
             {
                 throw new System.ArgumentException(nameof(item));
             }
+            
             Context.Gifts.Add(item);
             Context.SaveChanges();
             return item;
         }
 
         public Gift? GetItem(int id)
-            => List().FirstOrDefault<Gift>(i => i.Id == id);
+        {
+            SecretSantaContext context = new SecretSantaContext();
+
+            return context.Gifts
+                .Where(gift => gift.Id == id)
+                .SingleOrDefault();
+
+        }
 
         public ICollection<Gift> List()
             => Context.Gifts

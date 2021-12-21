@@ -7,6 +7,7 @@ namespace SecretSanta.Data
         public DbSet<User> Users => Set<User>();
         public DbSet<Group> Groups => Set<Group>();
         public DbSet<Gift> Gifts => Set<Gift>();
+
         public SecretSantaContext() :base(new DbContextOptionsBuilder<SecretSantaContext>()
             .EnableSensitiveDataLogging().UseSqlite("Data Source=main.db").Options)
         {
