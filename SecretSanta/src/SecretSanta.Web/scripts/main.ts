@@ -94,7 +94,7 @@ export function createOrUpdateUser(){
                 }
                 this.user.id = maxId +1;
                 await axios.post(`${apiHost}/api/users`, this.user);
-                window.location.href = "/Users";
+                window.location.href = "/users";
             }catch (error){
                 console.log(error);
             }
@@ -118,6 +118,57 @@ export function createOrUpdateUser(){
                 console.log(error);
             }
         }
+    }
+}
+
+export function createOrUpdateGift(){
+    return{
+        //init type
+        gift: {} as Gift,
+        allUsers: [] as User[],
+        selectedUserId: 0,
+
+        async create() {
+            try {
+                const client = new GiftsClient(apiHost);
+                this.gift.receiver = this.allUsers.find(u => u.id == this.selectedUserId);
+                await client.post(this.gift);
+                window.location.href='/Gift';
+            } catch (error) {
+                console.log(error);
+            }
+        },
+        async update() {
+            try {
+                const client = new GiftsClient(apiHost);
+                await client.put(this.gift.id, this.gift);
+                window.location.href='/gifts';
+            } catch (error) {
+                console.log(error);
+            }
+        },
+        async loadData() {
+            const pathnameSplit = window.location.pathname.split('/');
+            const id = pathnameSplit[pathnameSplit.length - 1];
+            try {
+                const client = new GiftsClient(apiHost);
+                this.gift = await client.get(+id);
+            } catch (error) {
+                console.log(error);
+            }
+        },
+        async loadUsers() {
+            try {
+                var client = new UsersClient(apiHost);
+                this.allUsers = await client.getAll() || [];
+                var index = this.allUsers.findIndex(x => true);
+                if (index >= 0) {
+                    this.selectedUserId = this.allUsers[index].id;
+                }
+            } catch (error) {
+                console.log(error);
+            }
+        },
     }
 }
 
