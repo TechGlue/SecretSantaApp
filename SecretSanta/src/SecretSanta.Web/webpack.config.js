@@ -37,8 +37,8 @@ module.exports = (env, argv) => {
                     use: [
                         { loader: MiniCssExtractPlugin.loader },
                         { loader: 'css-loader' },
-                        { loader: 'postcss-loader', options: { postcssOptions: { ident: 'postcss', plugins: () => {autoprefixer()} } } },
-                        { loader: 'sass-loader', options: { implementation: require('sass'), sassOptions: { fiber: require('fibers') } } }
+                        { loader: 'postcss-loader', options: { postcssOptions: { ident: 'postcss', plugins: () => {autoprefixer()} } } }
+                        // { loader: 'sass-loader', options: { implementation: require('sass'), sassOptions: { fiber: require('fibers') } } }
                     ]
                 },
                 {
