@@ -1,5 +1,5 @@
 
-# Secret Santa 🎅🏽 [![SecretSanta Build And Tests]<br> (https://github.com/TechGlue/SecretSantaApp/actions/workflows/dotnet.yml/badge.svg?branch=master)](https://github.com/TechGlue/SecretSantaApp/actions/workflows/dotnet.yml) [![Azure Deployment](https://github.com/TechGlue/SecretSantaApp/actions/workflows/master_lgarcia29-secretsanta.yml/badge.svg)](https://github.com/TechGlue/SecretSantaApp/actions/workflows/master_lgarcia29-secretsanta.yml)
+# Secret Santa 🎅 <br>🏽 [![SecretSanta Build And Tests](https://github.com/TechGlue/SecretSantaApp/actions/workflows/dotnet.yml/badge.svg?branch=master)](https://github.com/TechGlue/SecretSantaApp/actions/workflows/dotnet.yml) [![Azure Deployment](https://github.com/TechGlue/SecretSantaApp/actions/workflows/master_lgarcia29-secretsanta.yml/badge.svg)](https://github.com/TechGlue/SecretSantaApp/actions/workflows/master_lgarcia29-secretsanta.yml)
 
 
 What started as a a long term assignment in my .Net class, turned into a project.
