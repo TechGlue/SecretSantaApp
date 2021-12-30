@@ -9,8 +9,8 @@ using SecretSanta.Data;
 namespace SecretSanta.Data.Migrations
 {
     [DbContext(typeof(SecretSantaContext))]
-    [Migration("20211217052413_startingOver")]
-    partial class startingOver
+    [Migration("20211221044655_changeUpModel")]
+    partial class changeUpModel
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -57,6 +57,35 @@ namespace SecretSanta.Data.Migrations
                     b.HasIndex("ReceiverId");
 
                     b.ToTable("Assignment");
+                });
+
+            modelBuilder.Entity("SecretSanta.Data.Gift", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("Priority")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("ReceiverId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Url")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ReceiverId");
+
+                    b.ToTable("Gifts");
                 });
 
             modelBuilder.Entity("SecretSanta.Data.Group", b =>
@@ -182,9 +211,25 @@ namespace SecretSanta.Data.Migrations
                     b.Navigation("Receiver");
                 });
 
+            modelBuilder.Entity("SecretSanta.Data.Gift", b =>
+                {
+                    b.HasOne("SecretSanta.Data.User", "Receiver")
+                        .WithMany("Gifts")
+                        .HasForeignKey("ReceiverId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Receiver");
+                });
+
             modelBuilder.Entity("SecretSanta.Data.Group", b =>
                 {
                     b.Navigation("Assignments");
+                });
+
+            modelBuilder.Entity("SecretSanta.Data.User", b =>
+                {
+                    b.Navigation("Gifts");
                 });
 #pragma warning restore 612, 618
         }

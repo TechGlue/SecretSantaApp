@@ -6,8 +6,7 @@ What started as a a long term assignment in my .Net class, turned into a project
 The purpose of the project is for me to have a development space to mess around with a variety of technologies. As well as creating a safe space for me to fail, try my best to learn and implement a solution.
 The main functionality of the program is to generate random gift assignments in a group of users. 
 
-**Very much a work in progress**. Build is currently not fully working and other features will be implemented at a later date. 
-In the mean time check out my original fork to see the growth of the assignment.
+This build is reserved for new features and more like a playground type build. 
 
 
 ## Features

@@ -2,7 +2,7 @@
 
 namespace SecretSanta.Data.Migrations
 {
-    public partial class startingOver : Migration
+    public partial class changeUpModel : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -70,6 +70,29 @@ namespace SecretSanta.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Gifts",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Title = table.Column<string>(type: "TEXT", nullable: false),
+                    Description = table.Column<string>(type: "TEXT", nullable: true),
+                    Url = table.Column<string>(type: "TEXT", nullable: true),
+                    Priority = table.Column<int>(type: "INTEGER", nullable: false),
+                    ReceiverId = table.Column<int>(type: "INTEGER", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Gifts", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Gifts_Users_ReceiverId",
+                        column: x => x.ReceiverId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "GroupUser",
                 columns: table => new
                 {
@@ -134,6 +157,11 @@ namespace SecretSanta.Data.Migrations
                 column: "ReceiverId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Gifts_ReceiverId",
+                table: "Gifts",
+                column: "ReceiverId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_GroupUser_UsersId",
                 table: "GroupUser",
                 column: "UsersId");
@@ -143,6 +171,9 @@ namespace SecretSanta.Data.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Assignment");
+
+            migrationBuilder.DropTable(
+                name: "Gifts");
 
             migrationBuilder.DropTable(
                 name: "GroupUser");
