@@ -1,7 +1,7 @@
 @using Microsoft.Extensions.Configuration
 @inject IConfiguration Configuration
 
-<section class="flex flex-wrap mb-6" x-data="SecretSanta.setupUsers()" x-init="mounted()">
+@* <section class="flex flex-wrap mb-6" x-data="SecretSanta.setupUsers()" x-init="mounted()">
     <script>
         var webHost = "@Configuration["WebHost"].TrimEnd('/')";
     </script>
@@ -19,5 +19,5 @@
             </a>
         </section>
     </template>
-</section>
+</section> *@
 <a class="ml-4 border-2  bg-baby-blue-lighter hover:bg-baby-blue-dark  py-2 px-4 rounded-xl" asp-action="Create">Create User</a>
