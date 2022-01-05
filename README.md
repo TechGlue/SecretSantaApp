@@ -52,7 +52,7 @@ ctrl + c to exit once webpack compiled. Now compile and run the Web view.
 ```bash
   dotnet run
 ```
-Once ran you can find the application at the following local host address. http://localhost:5000/
+Once ran you can open up Chrome and find the application at the following local host address. http://localhost:5001/
 
 ## Demo
 
