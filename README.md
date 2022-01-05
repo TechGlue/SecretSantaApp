@@ -8,19 +8,55 @@ The main functionality of the program is to generate random gift assignments in 
 
 This build is reserved for new features and more like a playground type build. 
 
-
 ## Features
 
-- Clean and simple UI.
+- Clean and easy to use UI.
 - User's and Group's page for simple add and removals.
-- MVC pattern for speedy features development. 
-- Automated tests.
+- MVC pattern.
 
+## Running the project.
+
+Clone the project
+
+```bash
+  git clone https://github.com/TechGlue/SecretSantaApp
+```
+
+Go to the project directory. Then go into the src folder.
+
+```bash
+  cd SecretSantaApp
+  cd SecretSanta
+  cd src
+```
+
+From here you have to build and run the API and the Web View in seperate terminals.
+
+## API
+
+```bash
+  cd SecretSanta.Api
+  dotnet run 
+```
+Once executed the API should be running. Now switch over to setting up the Web view.
+
+## Web View
+
+```bash
+  cd SecretSanta.Web
+  npm install
+  npm run build:prod
+```
+ctrl + c to exit once webpack compiled. Now compile and run the Web view. 
+
+```bash
+  dotnet run
+```
+Once ran you can find the application at the following local host address. http://localhost:5000/
 
 ## Demo
 
 Coming soon...
-
 
 ## Acknowledgements
 
