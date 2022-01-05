@@ -9,7 +9,75 @@
 </head>
 
 <body>
-    <div class="m-8 bg-grey-50 ">
+  
+ <div id="text">
+                <h1 style='font-family:"Calibri",sans-serif;' class="text-5xl font-semibold">What is 
+                    Secret
+                    Santa?</h1>
+                <br>
+               <div class="relative">
+                <p style='margin:0in;font-family:"Calibri",sans-serif;' class="text-2xl">
+                    For those not familiar with
+                    Secret Santa.
+                    it&rsquo;s a way of spicing up the routine of gift-giving by randomizing the recipients and
+                    keeping
+                    all that
+                    information anonymous between one another.
+                </p>
+                </div>
+                <br>
+                <p style='margin:0in;font-family:"Calibri",sans-serif;' class="text-2xl">
+                    It&apos;s commonly used during the Christmas time by co-workers in an office, school classrooms, and
+                    about any one with a group of three plus people. Secret Santa can be applied to
+                    any
+                    gift giving event with multiple people.
+                </p>
+                <p style='margin:0in;font-size:16px;font-family:"Calibri",sans-serif;'>&nbsp;</p>
+                <h1 class="text-5xl font-semibold" style='margin:0in;font-family:"Calibri",sans-serif;'>How does it
+                    work?</h1>
+                <br>
+                <p style='margin:0in;font-family:"Calibri",sans-serif;' class="text-2xl">
+                    We&rsquo;ve made it simple to
+                    ensure that
+                    you
+                    can get out that list as soon as possible to ensure everyone has time to plan out their holiday
+                    ideas.
+                    It&rsquo;s as simple as creating a group for this holiday year. Setting up the users that you want
+                    to
+                    include.
+                    Going to your group&apos;s page, adding the users to the groups, and clicking the button <strong>"Generate Assignments"</strong>. This will
+                    assign a receipent for everyone in the group. That's all it takes!
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="m-10 text-center">
+        <h1 class="text-5xl font-semibold text-center ">Ready to get Started?</h1>
+        <p class="m-2 font-semibold">Start setting up your participants!</p>
+        <button
+            class="px-4 py-2 font-bold border border-blue-700 rounded bg-baby-blue-lighter hover:bg-baby-blue-dark"><a
+                asp-controller="Users" asp-action="Index">Create Participants</a></button>
+    </div>
+    <div class="m-8 text-left">
+        <h2 class="text-3xl font-semibold">Already have a list of participants?</h2>
+        <br>
+        <button
+            class="px-4 py-2 font-bold border border-blue-700 rounded bg-baby-blue-lighter hover:bg-baby-blue-dark"><a
+                asp-controller="Groups" asp-action="Index">View Groups</a></button>
+    </div>
+    <div class="m-8">
+        @*
+        <hr class=""> *@
+        <footer class="mt-8 text-sm font-semibold text-center text-gold2">
+            @* <a class="text-black hover:text-gold" href="https://github.com/TechGlue">
+                <p class="mt-1">Built by Luís :)</p>
+            </a> *@
+        </footer>
+    </div>
+      <div class="m-8 bg-grey-50 ">
         <div class="relative w-full max-w-lg">
             <header>
                 <div class="snowflakes" aria-hidden="true">
@@ -51,79 +119,6 @@
                     </div>
                 </div>
             </header>
-
-            <div id="circle1"
-                class="absolute top-0 -left-4 w-72 h-72 bg-baby-blue-lighter rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-blob">
-            </div>
-            <div id="circle2"
-                class="absolute top-0 -right-4 w-72 h-72 bg-indigo-100 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-blob animation-delay-2000">
-            </div>
-            <div id="circle3"
-                class="absolute -bottom-2 w-72 h-72 bg-indigo-100 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-blob animation-delay-4000">
-            </div>
-            <div id="text">
-                <div id="flex container" class="mr-2 flex justify-center">
-                    <h1 style='font-family:"Calibri",sans-serif;' class="text-5xl font-semibold">What is 
-                        Secret
-                        Santa?</h1>
-                </div>
-                <br>
-                <p style='margin:0in;font-family:"Calibri",sans-serif;' class="text-2xl">
-                    For those not familiar with
-                    Secret Santa.
-                    it&rsquo;s a way of spicing up the routine of gift-giving by randomizing the recipients and
-                    keeping
-                    all that
-                    information anonymous between one another.
-                </p>
-                <br>
-                <p style='margin:0in;font-family:"Calibri",sans-serif;' class="text-2xl">
-                    It&apos;s commonly used during the Christmas time by co-workers in an office, school classrooms, and
-                    about any one with a group of three plus people. Secret Santa can be applied to
-                    any
-                    gift giving event with multiple people.
-                </p>
-                <p style='margin:0in;font-size:16px;font-family:"Calibri",sans-serif;'>&nbsp;</p>
-                <h1 class="text-5xl font-semibold" style='margin:0in;font-family:"Calibri",sans-serif;'>How does it
-                    work?</h1>
-                <br>
-                <p style='margin:0in;font-family:"Calibri",sans-serif;' class="text-2xl">
-                    We&rsquo;ve made it simple to
-                    ensure that
-                    you
-                    can get out that list as soon as possible to ensure everyone has time to plan out their holiday
-                    ideas.
-                    It&rsquo;s as simple as creating a group for this holiday year. Setting up the users that you want
-                    to
-                    include.
-                    Going to your group&apos;s page, adding the users to the groups, and clicking the button <strong>"Generate Assignments"</strong>. This will
-                    assign a receipent for everyone in the group. That's all it takes!
-                </p>
-            </div>
-        </div>
-    </div>
-
-    <div class="m-10 text-center">
-        <h1 class="text-5xl font-semibold text-center ">Ready to get Started?</h1>
-        <p class="m-2 font-semibold">Start setting up your participants!</p>
-        <button
-            class="bg-baby-blue-lighter hover:bg-baby-blue-dark font-bold py-2 px-4 border border-blue-700 rounded"><a
-                asp-controller="Users" asp-action="Index">Create Participants</a></button>
-    </div>
-    <div class="m-8 text-left">
-        <h2 class="text-3xl font-semibold">Already have a list of participants?</h2>
-        <br>
-        <button
-            class="bg-baby-blue-lighter hover:bg-baby-blue-dark font-bold py-2 px-4 border border-blue-700 rounded"><a
-                asp-controller="Groups" asp-action="Index">View Groups</a></button>
-    </div>
-    <div class="m-8">
-        @* <hr class=""> *@
-        <footer class=" text-center font-semibold text-sm text-gold2 mt-8">
-            @* <a class="hover:text-gold text-black" href="https://github.com/TechGlue">
-                <p class="mt-1">Built by Luís :)</p>
-            </a> *@
-        </footer>
-    </div>
 </body>
+
 </html>
