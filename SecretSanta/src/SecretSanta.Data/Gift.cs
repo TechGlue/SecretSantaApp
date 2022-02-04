@@ -19,7 +19,8 @@ namespace SecretSanta.Data
         {
             Receiver = receiver ?? throw new ArgumentNullException(nameof(receiver));
         }
-
+        
+        //Empty contructor make dotnet ef happy :)
         public Gift()
         {}
         

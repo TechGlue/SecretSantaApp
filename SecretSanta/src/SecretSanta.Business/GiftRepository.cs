@@ -52,7 +52,7 @@ namespace SecretSanta.Business
         {
             if(item is null)
             {
-                throw new System.ArgumentNullException(nameof(item));
+                throw new ArgumentNullException(nameof(item));
             }
             Context.Gifts.Update(item);
             Context.SaveChanges();

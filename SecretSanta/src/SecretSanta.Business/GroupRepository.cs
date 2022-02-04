@@ -8,8 +8,7 @@ namespace SecretSanta.Business
 {
     public class GroupRepository : IGroupRepository
     {
-        private Random rng = new Random();
-        //instance of our context.
+        //Instance of our context 
         private SecretSantaContext Context = new SecretSantaContext();
         public Group Create(Group item)
         {
@@ -35,6 +34,9 @@ namespace SecretSanta.Business
         public bool Remove(int id)
         {
             Group item = Context.Groups.Find(id);
+            if (item is null)
+                return false;
+            
             Context.Groups.Remove(item);
             Context.SaveChanges();
             return true;
@@ -50,39 +52,6 @@ namespace SecretSanta.Business
             Context.Groups.Update(item);
             Context.SaveChanges();
         }
-
-        // public String ChangeTimeFormat(int groupId)
-        // {
-        //     Group? @group = GetItem(groupId);
-
-        //     if (group == null)
-        //     {
-        //         throw new ArgumentNullException(nameof(group));
-        //     }
-
-        //     char[] TimeArray = group.Time.ToCharArray();
-            
-        //     String hours = "";
-        //     String minutes = "";
-
-        //     hours += TimeArray[0];
-        //     hours += TimeArray[1];
-
-        //     minutes += TimeArray[3];
-        //     minutes += TimeArray[4];
-
-        //     if (Int32.Parse(hours) > 12)
-        //     {
-        //         int convertedHours = Int32.Parse(hours);
-        //         convertedHours = convertedHours - 12;
-        //         hours = convertedHours.ToString();
-
-        //         group.Time = hours + ":" + minutes + " PM";
-        //         return group.Time;
-        //     }
-        //         group.Time += " AM";
-        //         return group.Time;
-        // }
 
         public AssignmentResult GenerateAssignments(int groupId)
         {
@@ -123,7 +92,6 @@ namespace SecretSanta.Business
             }
 
             Save(@group);
-
             return AssignmentResult.Success();
         }
     }

@@ -13,7 +13,7 @@ namespace SecretSanta.Business
         {
             if (item is null)
             {
-                throw new System.ArgumentNullException(nameof(item));
+                throw new ArgumentNullException(nameof(item));
             }
 
             Context.Users.Add(item);
@@ -47,7 +47,7 @@ namespace SecretSanta.Business
         {
             if (item is null)
             {
-                throw new System.ArgumentNullException(nameof(item));
+                throw new ArgumentNullException(nameof(item));
             }
             Context.Users.Update(item);
             Context.SaveChanges();
