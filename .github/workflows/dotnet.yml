@@ -78,22 +78,22 @@ jobs:
       
     #BUSINESS#
 
-    # - name: Restore dependencies Business
-    #   working-directory: ./SecretSanta/src/SecretSanta.Business/
-    #   run: dotnet restore
+    - name: Restore dependencies Business
+      working-directory: ./SecretSanta/src/SecretSanta.Business/
+      run: dotnet restore
 
-    # - name: Build Business
-    #   working-directory: ./SecretSanta/src/SecretSanta.Business/
-    #   run: dotnet build --no-restore
+    - name: Build Business
+      working-directory: ./SecretSanta/src/SecretSanta.Business/
+      run: dotnet build --no-restore
 
-    # - name: Restore dependencies Business Tests
-    #   working-directory: ./SecretSanta/test/SecretSanta.Business.Tests/
-    #   run: dotnet restore
+    - name: Restore dependencies Business Tests
+      working-directory: ./SecretSanta/test/SecretSanta.Business.Tests/
+      run: dotnet restore
 
-    # - name: Build Business Tests
-    #   working-directory: ./SecretSanta/test/SecretSanta.Business.Tests/
-    #   run: dotnet build --no-restore 
+    - name: Build Business Tests
+      working-directory: ./SecretSanta/test/SecretSanta.Business.Tests/
+      run: dotnet build --no-restore 
 
-    # - name: Test Business
-    #   working-directory: ./SecretSanta/test/SecretSanta.Business.Tests/
-    #   run: dotnet test --no-build --verbosity normal
+    - name: Test Business
+      working-directory: ./SecretSanta/test/SecretSanta.Business.Tests/
+      run: dotnet test --no-build --verbosity normal
