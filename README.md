@@ -54,10 +54,8 @@ ctrl + c to exit once webpack compiled. Now compile and run the Web view.
 ```
 Once ran you can open up Chrome and find the application at the following local host address. http://localhost:5001/
 
-## Demo
-
-Coming soon...
-
+## Demo 
+[Here](https://youtu.be/XTqBEHyeES0)
 ## Acknowledgements
 
  - [My original fork](https://github.com/TechGlue/EWU-CSCD379-2021-Spring)
