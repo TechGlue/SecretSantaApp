@@ -2,7 +2,7 @@
 # Secret Santa 🎅 <br> [![SecretSanta Build And Tests](https://github.com/TechGlue/SecretSantaApp/actions/workflows/dotnet.yml/badge.svg?branch=master)](https://github.com/TechGlue/SecretSantaApp/actions/workflows/dotnet.yml)
 
 
-What started as a a long term assignment in my .Net class, turned into a project.
+What started as a a long term assignment in my ASP.Net class, turned into a project.
 The purpose of this project is for me to have a development space to mess around with a variety of technologies.
 The main functionality of the program is to generate random gift assignments in a group of users. 
 
